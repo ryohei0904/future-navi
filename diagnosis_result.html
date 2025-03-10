@@ -118,16 +118,16 @@
                     : "健康運は低め。無理せず休息を大切に。";
             }
         }
-
-        window.onload = function() {
+window.onload = function() {
     const params = new URLSearchParams(window.location.search);
     let birthdate = params.get("dob");
+
     if (birthdate) {
         let lifePathNumber = calculateLifePathNumber(birthdate);
         let loveScore = getScore(lifePathNumber + 1);
         let careerScore = getScore(lifePathNumber + 3);
         let healthScore = getScore(lifePathNumber + 5);
-        
+
         animateProgress("love", loveScore, "love");
         animateProgress("career", careerScore, "career");
         animateProgress("health", healthScore, "health");
@@ -136,13 +136,20 @@
         document.getElementById("career-text").innerText = getAnalysisText(careerScore, "career");
         document.getElementById("health-text").innerText = getAnalysisText(healthScore, "health");
     }
+};
 
-        function animateProgress(id, value, type) {
-            document.
-        
-        function redirectToPayment() {
-            window.location.href = "payment.html";
+function animateProgress(id, value, type) {
+    let elem = document.getElementById(id);
+    let width = 0;
+    let interval = setInterval(function() {
+        if (width >= value) {
+            clearInterval(interval);
+        } else {
+            width++;
+            elem.style.width = width + "%";
         }
+    }, 10);
+}
     </script>
 </body>
 </html>
