@@ -108,7 +108,7 @@
             animateProgress("love", loveScore);
             animateProgress("career", careerScore);
             animateProgress("health", healthScore);
-        }, 100);
+        }, 200);
 
         document.getElementById("love-text").innerText = getAnalysisText(loveScore, "love");
         document.getElementById("career-text").innerText = getAnalysisText(careerScore, "career");
@@ -127,18 +127,7 @@ function animateProgress(id, value) {
             elem.style.width = width + "%";
         }
     }, 10);
-}
-
-function redirectToPayment() {
-    const params = new URLSearchParams(window.location.search);
-    const birthdate = params.get("dob");
-
-    if (birthdate) {
-        window.location.href = `premium_result.html?dob=${birthdate}`;
-    } else {
-        window.location.href = "premium_result.html";
-    }
-}    
+} 
     </script>
 </body>
 </html>
