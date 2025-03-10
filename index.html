@@ -3,99 +3,104 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>未来診断スタート</title>
+    <title>未来診断</title>
     <style>
         body {
-            background-color: #0d0d0d;
+            background: radial-gradient(circle, rgba(10,10,20,1) 0%, rgba(0,0,10,1) 100%);
             color: white;
-            font-family: 'Arial', sans-serif;
+            font-family: 'Orbitron', sans-serif;
             text-align: center;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
             overflow: hidden;
         }
-        .container {
-            position: relative;
-            width: 300px;
-            height: 300px;
+        .diagnosis-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
         }
-        .circle {
-            width: 100%;
-            height: 100%;
+        .neon-circle {
+            width: 250px;
+            height: 250px;
             border-radius: 50%;
-            border: 5px solid rgba(0, 204, 255, 0.5);
-            position: absolute;
-            animation: spin 5s linear infinite;
-        }
-        @keyframes spin {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-        .start-text {
-            position: absolute;
-            width: 100%;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 1.5em;
+            border: 5px solid rgba(0, 183, 255, 0.8);
+            box-shadow: 0 0 20px rgba(0, 183, 255, 1), 0 0 40px rgba(0, 183, 255, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
             font-weight: bold;
+            cursor: pointer;
+            animation: glow 1.5s infinite alternate;
         }
-        .input-container {
-            margin-top: 20px;
-        }
-        input {
-            padding: 10px;
-            font-size: 16px;
-            border-radius: 5px;
-            border: none;
-            outline: none;
-            width: 200px;
-            text-align: center;
+        @keyframes glow {
+            from {
+                box-shadow: 0 0 20px rgba(0, 183, 255, 1);
+            }
+            to {
+                box-shadow: 0 0 40px rgba(0, 183, 255, 0.8);
+            }
         }
         .start-button {
-            margin-top: 20px;
-            padding: 10px 20px;
-            background-color: #00ccff;
+            background: transparent;
             border: none;
-            color: black;
+            color: white;
             font-size: 18px;
             font-weight: bold;
-            border-radius: 5px;
             cursor: pointer;
+        }
+        .input-box {
+            margin-top: 20px;
+            padding: 10px;
+            width: 200px;
+            border: 2px solid rgba(0, 183, 255, 0.8);
+            background: rgba(0, 0, 0, 0.6);
+            color: white;
+            font-size: 16px;
+            text-align: center;
+            outline: none;
+            border-radius: 5px;
+        }
+        .submit-btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: rgba(0, 183, 255, 0.8);
+            border: none;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 183, 255, 0.8);
             transition: 0.3s;
         }
-        .start-button:hover {
-            background-color: #0099cc;
+        .submit-btn:hover {
+            background: rgba(0, 255, 183, 0.8);
+            box-shadow: 0 0 15px rgba(0, 255, 183, 1);
         }
     </style>
 </head>
 <body>
-    <h1>🔮 未来診断</h1>
-    <p>あなたの生年月日を入力してください</p>
-    
-    <div class="container">
-        <div class="circle"></div>
-        <div class="start-text">診断を開始</div>
+    <div class="diagnosis-container">
+        <h1>🔮 未来診断</h1>
+        <p>あなたの生年月日を入力してください</p>
+        <div class="neon-circle" onclick="startDiagnosis()">
+            <button class="start-button">診断を開始</button>
+        </div>
+        <input type="date" class="input-box" id="birthdate">
+        <button class="submit-btn" onclick="analyzeFuture()">未来を解析する</button>
     </div>
-    
-    <div class="input-container">
-        <input type="date" id="dob" required>
-    </div>
-    
-    <button class="start-button" onclick="startDiagnosis()">未来を解析する</button>
-    
+
     <script>
         function startDiagnosis() {
-            const dob = document.getElementById('dob').value;
-            if (dob) {
-                window.location.href = `diagnosis_result.html?dob=${dob}`;
+            document.getElementById('birthdate').focus();
+        }
+        function analyzeFuture() {
+            let birthdate = document.getElementById('birthdate').value;
+            if (birthdate) {
+                window.location.href = `diagnosis_result.html?dob=${birthdate}`;
             } else {
-                alert('生年月日を入力してください！');
+                alert("生年月日を入力してください！");
             }
         }
     </script>
