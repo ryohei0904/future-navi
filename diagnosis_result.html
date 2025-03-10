@@ -90,36 +90,7 @@
     </div>
 
     <script>
-        function calculateLifePathNumber(birthdate) {
-    let numbers = birthdate.replace(/-/g, '').split('').map(Number);
-    let sum = numbers.reduce((a, b) => a + b, 0);
-    while (sum > 9) {
-        sum = sum.toString().split('').map(Number).reduce((a, b) => a + b, 0);
-    }
-    return sum;
-}
-
-function getScore(lifePathNumber) {
-    return (lifePathNumber * 11) % 100;
-}
-
-function getAnalysisText(score, type) {
-    if (type === 'love') {
-        return score > 70 ? "あなたの恋愛運は絶好調！理想的な出会いがあるかも。" 
-            : score > 40 ? "恋愛運は普通。今は自分磨きの時期。" 
-            : "恋愛運は低め。焦らずタイミングを待とう。";
-    } else if (type === 'career') {
-        return score > 70 ? "仕事運は絶好調！昇進や新しいチャンスがあるかも。" 
-            : score > 40 ? "仕事運は安定。大きな決断は慎重に。" 
-            : "仕事運は低め。今は準備期間としてスキルを磨こう。";
-    } else {
-        return score > 70 ? "健康運は良好！エネルギッシュに活動できる時期。" 
-            : score > 40 ? "健康運は普通。バランスの取れた生活を心掛けて。" 
-            : "健康運は低め。無理せず休息を大切に。";
-    }
-}
-
-window.onload = function() {
+        window.onload = function() {
     const params = new URLSearchParams(window.location.search);
     let birthdate = params.get("dob");
 
@@ -159,29 +130,15 @@ function animateProgress(id, value) {
 }
 
 function redirectToPayment() {
-    window.location.href = "payment.html";
-}
-window.onload = function() {
     const params = new URLSearchParams(window.location.search);
-    let birthdate = params.get("dob");
+    const birthdate = params.get("dob");
 
     if (birthdate) {
-        document.getElementById("dob-input").value = birthdate; // 生年月日入力欄がある場合
-
-        let lifePathNumber = calculateLifePathNumber(birthdate);
-        let loveScore = getScore(lifePathNumber + 1);
-        let careerScore = getScore(lifePathNumber + 3);
-        let healthScore = getScore(lifePathNumber + 5);
-
-        animateProgress("love", loveScore);
-        animateProgress("career", careerScore);
-        animateProgress("health", healthScore);
-
-        document.getElementById("love-text").innerText = getAnalysisText(loveScore, "love");
-        document.getElementById("career-text").innerText = getAnalysisText(careerScore, "career");
-        document.getElementById("health-text").innerText = getAnalysisText(healthScore, "health");
+        window.location.href = `premium_result.html?dob=${birthdate}`;
+    } else {
+        window.location.href = "premium_result.html";
     }
-};    
+}    
     </script>
 </body>
 </html>
