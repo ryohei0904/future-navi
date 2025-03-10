@@ -4,97 +4,152 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>未来診断</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
     <style>
+        /* 全体の背景 */
         body {
-            background: radial-gradient(circle, rgba(10,10,20,1) 0%, rgba(0,0,10,1) 100%);
+            background-color: black;
             color: white;
-            font-family: 'Orbitron', sans-serif;
+            font-family: Arial, sans-serif;
             text-align: center;
             overflow: hidden;
-        }
-        .diagnosis-container {
+            margin: 0;
+            height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            height: 100vh;
         }
-        .neon-circle {
-            width: 280px;
-            height: 280px;
+
+        /* 診断タイトル */
+        h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        /* 光る円 */
+        .glowing-circle {
+            position: relative;
+            width: 200px;
+            height: 200px;
             border-radius: 50%;
-            background: transparent;
-            border: 6px solid rgba(0, 183, 255, 0.9);
-            box-shadow: 0 0 25px rgba(0, 183, 255, 1), 0 0 50px rgba(0, 183, 255, 0.8);
+            background: radial-gradient(circle, rgba(0, 238, 255, 0.5) 30%, transparent 70%);
+            box-shadow: 0 0 20px #00eaff, 0 0 40px #00eaff;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 22px;
-            font-weight: bold;
-            cursor: pointer;
-            animation: glow 1.5s infinite alternate;
-            transition: all 0.8s ease-in-out;
+            transition: all 0.5s ease-in-out;
         }
-        @keyframes glow {
-            from {
-                box-shadow: 0 0 30px rgba(0, 183, 255, 1);
-            }
-            to {
-                box-shadow: 0 0 60px rgba(0, 183, 255, 0.9);
-            }
-        }
-        .input-container {
-            margin-top: 20px;
-        }
-        .input-box {
-            padding: 10px;
-            font-size: 18px;
-            background: black;
-            color: white;
-            border: 2px solid rgba(0, 183, 255, 0.9);
-            border-radius: 8px;
-            text-align: center;
-        }
-        .start-button {
-            margin-top: 20px;
-            padding: 12px 24px;
-            font-size: 18px;
-            color: white;
-            background: rgba(0, 183, 255, 0.9);
+
+        /* 診断開始ボタン */
+        .glowing-circle button {
+            background: none;
             border: none;
-            border-radius: 8px;
+            color: white;
+            font-size: 1.2em;
             cursor: pointer;
-            transition: 0.3s;
+            text-shadow: 0 0 10px #fff;
         }
-        .start-button:hover {
-            background: rgba(0, 183, 255, 1);
-            box-shadow: 0 0 20px rgba(0, 183, 255, 1);
+
+        /* 光点を回転させるコンテナ */
+        .glowing-orbit {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: orbit-rotate 8s linear infinite;
+        }
+
+        /* 光点（小さい光る玉） */
+        .glowing-dot {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background-color: #00eaff;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #00eaff;
+        }
+
+        /* 回転アニメーション */
+        @keyframes orbit-rotate {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        /* 各光点の配置 */
+        .glowing-dot:nth-child(1) { top: 0%; left: 50%; }
+        .glowing-dot:nth-child(2) { top: 25%; left: 85%; }
+        .glowing-dot:nth-child(3) { top: 50%; left: 100%; }
+        .glowing-dot:nth-child(4) { top: 75%; left: 85%; }
+        .glowing-dot:nth-child(5) { top: 100%; left: 50%; }
+        .glowing-dot:nth-child(6) { top: 75%; left: 15%; }
+        .glowing-dot:nth-child(7) { top: 50%; left: 0%; }
+        .glowing-dot:nth-child(8) { top: 25%; left: 15%; }
+
+        /* 診断ボタン押したときのエフェクト */
+        .flash-effect {
+            position: absolute;
+            width: 100vw;
+            height: 100vh;
+            background: white;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* 発光アニメーション */
+        @keyframes flash {
+            0% { opacity: 0; }
+            50% { opacity: 1; }
+            100% { opacity: 0; }
         }
     </style>
 </head>
 <body>
-    <div class="diagnosis-container">
-        <h1>🔮 未来診断</h1>
-        <p>あなたの生年月日を入力してください</p>
-        <div class="neon-circle" id="start-diagnosis">
-            診断を開始
-        </div>
-        <div class="input-container">
-            <input type="date" class="input-box" id="birthdate">
-        </div>
-        <button class="start-button" id="analyze-button">未来を解析する</button>
+
+    <h1>🔮 未来診断</h1>
+    <p>あなたの生年月日を入力してください</p>
+
+    <!-- 発光するサークル -->
+    <div class="glowing-circle" id="diagnosis-circle">
+        <button id="start-diagnosis">診断を開始</button>
     </div>
 
+    <!-- 光点を回るエフェクト -->
+    <div class="glowing-orbit">
+        <div class="glowing-dot"></div>
+        <div class="glowing-dot"></div>
+        <div class="glowing-dot"></div>
+        <div class="glowing-dot"></div>
+        <div class="glowing-dot"></div>
+        <div class="glowing-dot"></div>
+        <div class="glowing-dot"></div>
+        <div class="glowing-dot"></div>
+    </div>
+
+    <!-- フラッシュエフェクト -->
+    <div class="flash-effect" id="flash"></div>
+
     <script>
-        document.getElementById("analyze-button").addEventListener("click", function() {
-            let birthdate = document.getElementById('birthdate').value;
-            if (birthdate) {
-                window.location.href = `diagnosis_result.html?dob=${birthdate}`;
-            } else {
-                alert("生年月日を入力してください！");
-            }
+        document.getElementById("start-diagnosis").addEventListener("click", function() {
+            const circle = document.getElementById("diagnosis-circle");
+            const flash = document.getElementById("flash");
+
+            // サークルが大きくなる
+            circle.style.transform = "scale(1.5)";
+            circle.style.boxShadow = "0 0 50px #00eaff, 0 0 100px #00eaff";
+
+            // 画面全体のフラッシュ
+            flash.style.animation = "flash 1s ease-in-out";
+            flash.style.opacity = "1";
+
+            // 1秒後に診断ページへ移行
+            setTimeout(() => {
+                window.location.href = "diagnosis_result.html";
+            }, 1000);
         });
     </script>
+
 </body>
 </html>
