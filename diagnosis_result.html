@@ -72,7 +72,7 @@
             <div class="progress"><div id="health"></div></div>
         </div>
         
-        <button onclick="unlockFullPrediction()">🔓 詳細解析を開放する</button>
+        <button onclick="redirectToPayment()">🔓 詳細解析を開放する</button>
     </div>
 
     <script>
@@ -108,8 +108,8 @@
             document.getElementById(id).style.width = value + "%";
         }
         
-        function unlockFullPrediction() {
-            alert("この機能は有料版で利用できます！");
+        function redirectToPayment() {
+            window.location.href = "payment.html";
         }
     </script>
 </body>
