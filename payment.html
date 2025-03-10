@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI診断結果</title>
+    <title>詳細解析の購入</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -12,7 +12,7 @@
             text-align: center;
             padding: 20px;
         }
-        .dashboard {
+        .container {
             max-width: 600px;
             margin: auto;
             background: #161b22;
@@ -20,96 +20,36 @@
             border-radius: 10px;
             box-shadow: 0px 0px 20px rgba(0, 255, 255, 0.5);
         }
-        .section {
-            margin: 20px 0;
-            padding: 10px;
-            border-radius: 10px;
-            background: rgba(255, 255, 255, 0.1);
-        }
-        .progress {
-            height: 20px;
-            border-radius: 10px;
-            background: rgba(255, 255, 255, 0.2);
-            overflow: hidden;
-        }
-        .progress div {
-            height: 100%;
-            background: #00ccff;
-            width: 0;
-            transition: width 1s ease-in-out;
-        }
-        button {
+        .button {
             background: #00ccff;
             color: #000;
             padding: 10px 15px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            margin-top: 10px;
+            margin-top: 20px;
         }
-        button:hover {
+        .button:hover {
             background: #0099cc;
         }
     </style>
 </head>
 <body>
-    <div class="dashboard">
-        <h2>🔮 AI未来診断 結果</h2>
-        <p>あなたの未来予測データを解析しました！</p>
-        
-        <div class="section">
-            <h3>💖 恋愛運</h3>
-            <div class="progress"><div id="love"></div></div>
-        </div>
-        
-        <div class="section">
-            <h3>💼 仕事運</h3>
-            <div class="progress"><div id="career"></div></div>
-        </div>
-        
-        <div class="section">
-            <h3>🩺 健康運</h3>
-            <div class="progress"><div id="health"></div></div>
-        </div>
-        
-        <button onclick="redirectToPayment()">🔓 詳細解析を開放する</button>
+    <div class="container">
+        <h2>🔓 詳細解析を開放！</h2>
+        <p>AIがあなたの未来をさらに詳しく予測します！</p>
+        <ul>
+            <li>🌟 3年後のあなたの可能性</li>
+            <li>🔮 恋愛・仕事・健康の詳細分析</li>
+            <li>✨ あなたに最適な未来の選択肢</li>
+        </ul>
+        <button class="button" onclick="processPayment()">今すぐ開放（¥500）</button>
     </div>
 
     <script>
-        function calculateLifePathNumber(birthdate) {
-            let numbers = birthdate.replace(/-/g, '').split('').map(Number);
-            let sum = numbers.reduce((a, b) => a + b, 0);
-            while (sum > 9) {
-                sum = sum.toString().split('').map(Number).reduce((a, b) => a + b, 0);
-            }
-            return sum;
-        }
-
-        function getScore(lifePathNumber) {
-            return (lifePathNumber * 11) % 100;
-        }
-
-        window.onload = function() {
-            const params = new URLSearchParams(window.location.search);
-            let birthdate = params.get("dob");
-            if (birthdate) {
-                let lifePathNumber = calculateLifePathNumber(birthdate);
-                animateProgress("love", getScore(lifePathNumber + 1));
-                animateProgress("career", getScore(lifePathNumber + 3));
-                animateProgress("health", getScore(lifePathNumber + 5));
-            } else {
-                animateProgress("love", Math.floor(Math.random() * 100));
-                animateProgress("career", Math.floor(Math.random() * 100));
-                animateProgress("health", Math.floor(Math.random() * 100));
-            }
-        }
-
-        function animateProgress(id, value) {
-            document.getElementById(id).style.width = value + "%";
-        }
-        
-        function redirectToPayment() {
-            window.location.href = "payment.html";
+        function processPayment() {
+            alert("決済システム準備中。開発完了後に正式に決済可能になります。");
+            window.location.href = "premium_result.html"; // 購入完了後のページ
         }
     </script>
 </body>
