@@ -120,23 +120,26 @@
         }
 
         window.onload = function() {
-            const params = new URLSearchParams(window.location.search);
-            let birthdate = params.get("dob");
-            if (birthdate) {
-                let lifePathNumber = calculateLifePathNumber(birthdate);
-                let loveScore = getScore(lifePathNumber + 1);
-                let careerScore = getScore(lifePathNumber + 3);
-                let healthScore = getScore(lifePathNumber + 5);
-                animateProgress("love", loveScore, "love");
-                animateProgress("career", careerScore, "career");
-                animateProgress("health", healthScore, "health");
-            }
-        }
+    const params = new URLSearchParams(window.location.search);
+    let birthdate = params.get("dob");
+    if (birthdate) {
+        let lifePathNumber = calculateLifePathNumber(birthdate);
+        let loveScore = getScore(lifePathNumber + 1);
+        let careerScore = getScore(lifePathNumber + 3);
+        let healthScore = getScore(lifePathNumber + 5);
+        
+        animateProgress("love", loveScore, "love");
+        animateProgress("career", careerScore, "career");
+        animateProgress("health", healthScore, "health");
+
+        // 🔥 ここでコメントを適用！
+        document.getElementById("love-text").innerText = getAnalysisText(loveScore, "love");
+        document.getElementById("career-text").innerText = getAnalysisText(careerScore, "career");
+        document.getElementById("health-text").innerText = getAnalysisText(healthScore, "health");
+    }
 
         function animateProgress(id, value, type) {
-            document.getElementById(id).style.width = value + "%";
-            document.getElementById(id + "-text").innerText = getAnalysisText(value, type);
-        }
+            document.
         
         function redirectToPayment() {
             window.location.href = "payment.html";
