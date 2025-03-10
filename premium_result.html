@@ -79,34 +79,31 @@
         </div>
     </div>
 
-    <script>
-        window.onload = function() {
-    const params = new URLSearchParams(window.location.search);
-    let birthdate = params.get("dob");
+<script>
+    window.onload = function() {
+        const params = new URLSearchParams(window.location.search);
+        let birthdate = params.get("dob");
 
-    if (birthdate) {
-        document.getElementById("dob-display").innerText = `あなたの生年月日: ${birthdate}`;
+        if (birthdate) {
+            document.getElementById("dob-display").innerText = `あなたの生年月日: ${birthdate}`;
+        }
+    };
+
+    function unlockContent() {
+        document.getElementById("premium-content").classList.add("unlocked");
+        document.getElementById("unlock-message").style.display = "block"; // 🔹 メッセージを表示
     }
-};
-        function goBack() {
+
+    function goBackWithParams() {
+        const params = new URLSearchParams(window.location.search);
+        const birthdate = params.get("dob");
+
+        if (birthdate) {
+            window.location.href = `diagnosis_result.html?dob=${birthdate}`;
+        } else {
             window.location.href = "diagnosis_result.html";
         }
-        function goToHome() {
-            window.location.href = "index.html"; // 診断開始ページへ戻る
-        }
-        function goToAdvanced() {
-            window.location.href = "advanced_analysis.html"; // 詳細診断ページ（後で作成）
-        }
-        function goBackWithParams() {
-    const params = new URLSearchParams(window.location.search);
-    const birthdate = params.get("dob");
-
-    if (birthdate) {
-        window.location.href = `diagnosis_result.html?dob=${birthdate}`;
-    } else {
-        window.location.href = "diagnosis_result.html";
     }
-}
-    </script>
+</script>
 </body>
 </html>
