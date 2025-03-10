@@ -69,7 +69,7 @@
         
         <p class="advice">✨ あなたの未来をより良くするためのアドバイス: 自分の強みを活かし、ポジティブに行動することが成功の鍵です！</p>
         
-        <button class="back-button" onclick="goBack()">🔙 診断結果に戻る</button>
+        <button class="back-button" onclick="goBackWithParams()">🔙 診断結果に戻る</button>
         <button class="back-button" onclick="goToHome()">🏠 診断トップへ戻る</button>
         
         <div class="future-section">
@@ -89,6 +89,16 @@
         function goToAdvanced() {
             window.location.href = "advanced_analysis.html"; // 詳細診断ページ（後で作成）
         }
+        function goBackWithParams() {
+    const params = new URLSearchParams(window.location.search);
+    const birthdate = params.get("dob");
+
+    if (birthdate) {
+        window.location.href = `diagnosis_result.html?dob=${birthdate}`;
+    } else {
+        window.location.href = "diagnosis_result.html"; // 念のためのフォールバック
+    }
+}
     </script>
 </body>
 </html>
