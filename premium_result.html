@@ -88,8 +88,8 @@
         </div>
 
         <!-- 🔹 500円ボタン（モザイク解除） -->
-        <button class="unlock-button" onclick="unlockContent()">🔓 500円で詳細を開放する</button>
-        <p id="unlock-message" class="unlock-message">🔓 決済準備中です！現在は無料で開放中！</p>
+        <button id="unlock-button" onclick="unlockPremiumContent()">🔓 500円で詳細を開放する</button>
+       <p id="free-access-message">🔓 決済準備中です！現在は無料で開放中！</p>
 
         <button class="back-button" onclick="goBackWithParams()">🔙 診断結果に戻る</button>
         <button class="back-button" onclick="goToHome()">🏠 診断トップへ戻る</button>
@@ -136,6 +136,11 @@
     function goToHome() {
         window.location.href = "index.html"; // 診断トップへ戻る
     }
+    function unlockPremiumContent() {
+    document.getElementById("premium-content").style.filter = "none"; // モザイク解除
+    document.getElementById("unlock-button").style.display = "none"; // 500円ボタンを非表示
+    document.getElementById("free-access-message").style.display = "none"; // 決済準備中メッセージを非表示
+}
 </script>
 </body>
 </html>
