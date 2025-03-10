@@ -90,6 +90,45 @@
     </div>
 
     <script>
+    function calculateLifePathNumber(birthdate) {
+        let numbers = birthdate.replace(/-/g, '').split('').map(Number);
+        let sum = numbers.reduce((a, b) => a + b, 0);
+        while (sum > 9) {
+            sum = sum.toString().split('').map(Number).reduce((a, b) => a + b, 0);
+        }
+        return sum;
+    }
+
+    function getScore(lifePathNumber) {
+        return (lifePathNumber * 11) % 100;
+    }
+
+    window.onload = function() {
+        const params = new URLSearchParams(window.location.search);
+        let birthdate = params.get("dob");
+
+        if (birthdate) {
+            let lifePathNumber = calculateLifePathNumber(birthdate);
+            animateProgress("love", getScore(lifePathNumber + 1));
+            animateProgress("career", getScore(lifePathNumber + 3));
+            animateProgress("health", getScore(lifePathNumber + 5));
+        }
+    }
+
+    function animateProgress(id, value) {
+        let elem = document.getElementById(id);
+        if (!elem) return;
+        let width = 0;
+        let interval = setInterval(function() {
+            if (width >= value) {
+                clearInterval(interval);
+            } else {
+                width += 1;
+                elem.style.width = width + "%";
+            }
+        }, 10);
+    }
+</script>
         window.onload = function() {
     const params = new URLSearchParams(window.location.search);
     let birthdate = params.get("dob");
