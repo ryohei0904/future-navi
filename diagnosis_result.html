@@ -90,6 +90,16 @@
     </div>
 
     <script>
+        function redirectToPayment() {
+    const params = new URLSearchParams(window.location.search);
+    const birthdate = params.get("dob");
+
+    if (birthdate) {
+        window.location.href = `premium_result.html?dob=${birthdate}`;
+    } else {
+        window.location.href = "premium_result.html";
+    }
+}
     <script>
     function calculateLifePathNumber(birthdate) {
         let numbers = birthdate.replace(/-/g, '').split('').map(Number);
