@@ -90,17 +90,17 @@
     </div>
 
     <script>
-        function redirectToPayment() {
-    const params = new URLSearchParams(window.location.search);
-    const birthdate = params.get("dob");
+    function redirectToPayment() {
+        const params = new URLSearchParams(window.location.search);
+        const birthdate = params.get("dob");
 
-    if (birthdate) {
-        window.location.href = `premium_result.html?dob=${birthdate}`;
-    } else {
-        window.location.href = "premium_result.html";
+        if (birthdate) {
+            window.location.href = `premium_result.html?dob=${birthdate}`;
+        } else {
+            window.location.href = "premium_result.html";
+        }
     }
-}
-    <script>
+
     function calculateLifePathNumber(birthdate) {
         let numbers = birthdate.replace(/-/g, '').split('').map(Number);
         let sum = numbers.reduce((a, b) => a + b, 0);
@@ -164,17 +164,6 @@
             document.getElementById("health-text").innerText = getAnalysisText(healthScore, "health");
         }
     };
-function redirectToPayment() {
-    const params = new URLSearchParams(window.location.search);
-    const birthdate = params.get("dob");
-
-    if (birthdate) {
-        window.location.href = `premium_result.html?dob=${birthdate}`;
-    } else {
-        window.location.href = "premium_result.html";
-    }
-}
-    </script>
-    </script>
+</script>
 </body>
 </html>
