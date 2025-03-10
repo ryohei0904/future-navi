@@ -151,10 +151,11 @@ function animateProgress(id, value) {
         if (width >= value) {
             clearInterval(interval);
         } else {
-            width++;
+            width += 1;
             elem.style.width = width + "%";
         }
-    }, 10);
+    }, 10); 
+}
 }
 }
     </script>
