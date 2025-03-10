@@ -78,6 +78,14 @@
             background: rgba(0, 255, 183, 0.8);
             box-shadow: 0 0 15px rgba(0, 255, 183, 1);
         }
+    .glow-button {
+    transition: all 0.3s ease-in-out;
+}
+
+.glow-button:active {
+    box-shadow: 0 0 20px rgba(0, 170, 255, 0.8);
+    transform: scale(1.1);
+}
     </style>
 </head>
 <body>
@@ -88,7 +96,7 @@
             <button class="start-button">診断を開始</button>
         </div>
         <input type="date" class="input-box" id="birthdate">
-        <button class="submit-btn" onclick="analyzeFuture()">未来を解析する</button>
+        <button id="start-diagnosis" class="glow-button">未来を解析する</button>
     </div>
 
     <script>
@@ -103,6 +111,19 @@
                 alert("生年月日を入力してください！");
             }
         }
+document.getElementById("start-diagnosis").addEventListener("click", function() {
+    let button = this;
+    
+    // ネオン発光エフェクト
+    button.style.boxShadow = "0 0 30px rgba(0, 170, 255, 1)";
+    button.style.transform = "scale(1.1)";
+    
+    // 0.5秒後に診断結果ページへ遷移
+    setTimeout(() => {
+        window.location.href = "diagnosis_result.html"; // 診断結果ページへ
+    }, 500);
+});
+</script>
     </script>
 </body>
 </html>
