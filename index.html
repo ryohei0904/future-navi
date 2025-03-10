@@ -135,21 +135,34 @@
     <div class="flash-overlay" id="flashOverlay"></div>
 
     <script>
-        // 光点を診断ボタンの周囲に配置
-        function createParticles() {
-            const container = document.getElementById('particleContainer');
-            for (let i = 0; i < 12; i++) {
-                let particle = document.createElement('div');
-                particle.classList.add('particle');
-                let angle = (i / 12) * 360;
-                let duration = 5 + Math.random() * 2; 
-                particle.style.animation = `orbit ${duration}s linear infinite`;
-                particle.style.transform = `rotate(${angle}deg) translateX(130px)`;
-                container.appendChild(particle);
-            }
-        }
+        // 光点を診断ボタンの円周上に配置
+function createParticles() {
+    const container = document.getElementById('particleContainer');
+    const particleCount = 12; // 光点の数
+    const radius = 90; // 診断ボタンの周りの半径（数値を調整）
 
-        createParticles();
+    for (let i = 0; i < particleCount; i++) {
+        let particle = document.createElement('div');
+        particle.classList.add('particle');
+
+        let angle = (i / particleCount) * 2 * Math.PI; // 均等配置
+        let x = radius * Math.cos(angle);
+        let y = radius * Math.sin(angle);
+
+        particle.style.position = "absolute";
+        particle.style.left = `calc(50% + ${x}px)`;
+        particle.style.top = `calc(50% + ${y}px)`;
+
+        // 軌道を回るアニメーション
+        let rotationSpeed = 4 + Math.random() * 2; // 速度をランダム化
+        particle.style.animation = `orbit ${rotationSpeed}s linear infinite`;
+        particle.style.animationDelay = `${Math.random()}s`; // ずれを加える
+
+        container.appendChild(particle);
+    }
+}
+
+createParticles();
 
         // 診断ボタンのアニメーションとページ遷移
         function startDiagnosis() {
