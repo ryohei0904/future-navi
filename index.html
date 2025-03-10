@@ -101,16 +101,6 @@
 
     <script>
         function startDiagnosis() {
-            document.getElementById('birthdate').focus();
-        }
-        function analyzeFuture() {
-            let birthdate = document.getElementById('birthdate').value;
-            if (birthdate) {
-                window.location.href = `diagnosis_result.html?dob=${birthdate}`;
-            } else {
-                alert("生年月日を入力してください！");
-            }
-        }
 document.getElementById("start-diagnosis").addEventListener("click", function() {
     let button = this;
     let birthdate = document.getElementById('birthdate').value;
