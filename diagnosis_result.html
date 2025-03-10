@@ -90,6 +90,7 @@
     </div>
 
     <script>
+    <script>
     function calculateLifePathNumber(birthdate) {
         let numbers = birthdate.replace(/-/g, '').split('').map(Number);
         let sum = numbers.reduce((a, b) => a + b, 0);
@@ -153,6 +154,7 @@
             document.getElementById("health-text").innerText = getAnalysisText(healthScore, "health");
         }
     };
+</script>
     </script>
 </body>
 </html>
