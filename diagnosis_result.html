@@ -161,6 +161,27 @@ function animateProgress(id, value) {
 function redirectToPayment() {
     window.location.href = "payment.html";
 }
+window.onload = function() {
+    const params = new URLSearchParams(window.location.search);
+    let birthdate = params.get("dob");
+
+    if (birthdate) {
+        document.getElementById("dob-input").value = birthdate; // 生年月日入力欄がある場合
+
+        let lifePathNumber = calculateLifePathNumber(birthdate);
+        let loveScore = getScore(lifePathNumber + 1);
+        let careerScore = getScore(lifePathNumber + 3);
+        let healthScore = getScore(lifePathNumber + 5);
+
+        animateProgress("love", loveScore);
+        animateProgress("career", careerScore);
+        animateProgress("health", healthScore);
+
+        document.getElementById("love-text").innerText = getAnalysisText(loveScore, "love");
+        document.getElementById("career-text").innerText = getAnalysisText(careerScore, "career");
+        document.getElementById("health-text").innerText = getAnalysisText(healthScore, "health");
+    }
+};    
     </script>
 </body>
 </html>
