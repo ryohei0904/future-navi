@@ -33,6 +33,7 @@
             margin-bottom: 30px;
         }
 
+        /* 診断サークル */
         .circle {
             position: relative;
             width: 180px;
@@ -49,10 +50,11 @@
         }
 
         .circle.glow {
-            transform: scale(2);
-            box-shadow: 0 0 100px 30px rgba(0, 255, 255, 1);
+            transform: scale(3);
+            box-shadow: 0 0 150px 50px rgba(0, 255, 255, 1);
         }
 
+        /* 軌道を回る光点 */
         .particles {
             position: absolute;
             width: 100%;
@@ -74,10 +76,7 @@
             100% { transform: rotate(360deg) translateX(120px) rotate(-360deg); }
         }
 
-        .input-container {
-            margin-top: 20px;
-        }
-
+        /* 生年月日入力欄 */
         .dob-input {
             font-size: 18px;
             padding: 10px;
@@ -89,8 +88,10 @@
             color: white;
             border: 2px solid cyan;
             box-shadow: 0 0 10px cyan;
+            margin-top: 20px;
         }
 
+        /* 診断開始ボタン */
         .start-btn {
             margin-top: 15px;
             padding: 12px 25px;
@@ -118,3 +119,76 @@
             width: 100%;
             height: 100%;
             background: white;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease-in-out, visibility 0s linear 0.5s;
+        }
+
+        .flash-overlay.active {
+            opacity: 1;
+            visibility: visible;
+            transition: opacity 0.5s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="title">🔮 未来診断</div>
+        <div class="subtitle">あなたの生年月日を入力してください</div>
+        
+        <div class="circle" id="diagnosisCircle">診断を開始</div>
+        
+        <div class="particles" id="particleContainer"></div>
+        
+        <input type="date" id="dob" class="dob-input">
+        <button class="start-btn" onclick="startDiagnosis()">未来を解析する</button>
+    </div>
+
+    <div class="flash-overlay" id="flashOverlay"></div>
+
+    <script>
+        // 軌道を回る光点を生成
+        function createParticles() {
+            const container = document.getElementById('particleContainer');
+            for (let i = 0; i < 10; i++) {
+                let particle = document.createElement('div');
+                particle.classList.add('particle');
+                let angle = (i / 10) * 360;
+                let duration = 2 + Math.random();
+                particle.style.animation = `orbit ${duration}s linear infinite`;
+                particle.style.transform = `rotate(${angle}deg) translateX(120px)`;
+                container.appendChild(particle);
+            }
+        }
+
+        createParticles();
+
+        // 診断ボタンのアニメーションとページ遷移
+        function startDiagnosis() {
+            let circle = document.getElementById('diagnosisCircle');
+            let flashOverlay = document.getElementById('flashOverlay');
+            let dob = document.getElementById('dob').value;
+
+            if (!dob) {
+                alert("生年月日を入力してください！");
+                return;
+            }
+
+            // 光を強めつつサークルを拡大
+            circle.classList.add('glow');
+
+            // 画面全体を白くするエフェクト
+            setTimeout(() => {
+                flashOverlay.classList.add('active');
+            }, 700);
+
+            // 診断ページへ遷移
+            setTimeout(() => {
+                window.location.href = `diagnosis_result.html?dob=${dob}`;
+            }, 1000);
+        }
+    </script>
+
+</body>
+</html>
