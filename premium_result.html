@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔮 プレミアム未来診断</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #0d1117;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+        }
+        .container {
+            max-width: 700px;
+            margin: auto;
+            background: #161b22;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 20px rgba(0, 255, 255, 0.5);
+        }
+        .future-section {
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        h2 {
+            color: #00ccff;
+        }
+        .advice {
+            font-style: italic;
+            color: #ffcc00;
+        }
+        .back-button {
+            background: #00ccff;
+            color: #000;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        .back-button:hover {
+            background: #0099cc;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔮 プレミアム未来診断</h1>
+        <p>あなたの3年後の未来を詳細に解析しました！</p>
+        
+        <div class="future-section">
+            <h2>🌟 理想の未来</h2>
+            <p>あなたは夢を叶え、理想的な環境で活躍しています。充実した日々を送り、周囲からも尊敬される存在になっています。</p>
+        </div>
+        
+        <div class="future-section">
+            <h2>⚖ 普通の未来</h2>
+            <p>あなたの未来は安定していますが、特に大きな変化はありません。自分次第で大きく成長できる可能性があります。</p>
+        </div>
+        
+        <div class="future-section">
+            <h2>💥 予想外の未来</h2>
+            <p>あなたの未来には大きな転機が待っています。ピンチをチャンスに変えることで、新しい道が開かれるでしょう。</p>
+        </div>
+        
+        <p class="advice">✨ あなたの未来をより良くするためのアドバイス: 自分の強みを活かし、ポジティブに行動することが成功の鍵です！</p>
+        
+        <button class="back-button" onclick="goBack()">🔙 診断結果に戻る</button>
+        <button class="back-button" onclick="goToHome()">🏠 診断トップへ戻る</button>
+        
+        <div class="future-section">
+            <h2>🔍 もっと詳しく知る</h2>
+            <p>3年後のあなたの未来をさらに詳しく解析できます！</p>
+            <button class="back-button" onclick="goToAdvanced()">🔎 詳細診断を見る</button>
+        </div>
+    </div>
+
+    <script>
+        function goBack() {
+            window.location.href = "diagnosis_result.html";
+        }
+        function goToHome() {
+            window.location.href = "index.html"; // 診断開始ページへ戻る
+        }
+        function goToAdvanced() {
+            window.location.href = "advanced_analysis.html"; // 詳細診断ページ（後で作成）
+        }
+    </script>
+</body>
+</html>
