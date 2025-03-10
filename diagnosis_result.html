@@ -103,16 +103,21 @@
         return (lifePathNumber * 11) % 100;
     }
 
-    window.onload = function() {
-        const params = new URLSearchParams(window.location.search);
-        let birthdate = params.get("dob");
-
-        if (birthdate) {
-            let lifePathNumber = calculateLifePathNumber(birthdate);
-            animateProgress("love", getScore(lifePathNumber + 1));
-            animateProgress("career", getScore(lifePathNumber + 3));
-            animateProgress("health", getScore(lifePathNumber + 5));
+    function getAnalysisText(score, type) {
+        if (type === "love") {
+            return score > 75 ? "恋愛運は絶好調！運命の出会いがあるかも。" :
+                   score > 50 ? "恋愛運は良好。積極的に動くと吉！" :
+                   "恋愛運は普通。今は自分磨きの時期。";
+        } else if (type === "career") {
+            return score > 75 ? "仕事運は絶好調！昇進や新しいチャンスがあるかも。" :
+                   score > 50 ? "仕事運は良好。挑戦する価値あり！" :
+                   "仕事運は安定。コツコツ努力が吉。";
+        } else if (type === "health") {
+            return score > 75 ? "健康運は最高！体力も気力も充実している。" :
+                   score > 50 ? "健康運は良好。適度な運動でさらに良くなる！" :
+                   "健康運は低め。無理せず休息を大切に。";
         }
+        return "";
     }
 
     function animateProgress(id, value) {
@@ -128,45 +133,26 @@
             }
         }, 10);
     }
-</script>
-        window.onload = function() {
-    const params = new URLSearchParams(window.location.search);
-    let birthdate = params.get("dob");
 
-    if (birthdate) {
-        let lifePathNumber = calculateLifePathNumber(birthdate);
-        let loveScore = getScore(lifePathNumber + 1);
-        let careerScore = getScore(lifePathNumber + 3);
-        let healthScore = getScore(lifePathNumber + 5);
+    window.onload = function() {
+        const params = new URLSearchParams(window.location.search);
+        let birthdate = params.get("dob");
 
-        document.getElementById("love").style.width = "0%";
-        document.getElementById("career").style.width = "0%";
-        document.getElementById("health").style.width = "0%";
+        if (birthdate) {
+            let lifePathNumber = calculateLifePathNumber(birthdate);
+            let loveScore = getScore(lifePathNumber + 1);
+            let careerScore = getScore(lifePathNumber + 3);
+            let healthScore = getScore(lifePathNumber + 5);
 
-        setTimeout(() => {
             animateProgress("love", loveScore);
             animateProgress("career", careerScore);
             animateProgress("health", healthScore);
-        }, 200);
 
-        document.getElementById("love-text").innerText = getAnalysisText(loveScore, "love");
-        document.getElementById("career-text").innerText = getAnalysisText(careerScore, "career");
-        document.getElementById("health-text").innerText = getAnalysisText(healthScore, "health");
-    }
-};
-
-function animateProgress(id, value) {
-    let elem = document.getElementById(id);
-    let width = 0;
-    let interval = setInterval(function() {
-        if (width >= value) {
-            clearInterval(interval);
-        } else {
-            width += 1;
-            elem.style.width = width + "%";
+            document.getElementById("love-text").innerText = getAnalysisText(loveScore, "love");
+            document.getElementById("career-text").innerText = getAnalysisText(careerScore, "career");
+            document.getElementById("health-text").innerText = getAnalysisText(healthScore, "health");
         }
-    }, 10);
-} 
+    };
     </script>
 </body>
 </html>
