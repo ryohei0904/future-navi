@@ -59,31 +59,27 @@
             opacity: 0;
             transition: opacity 1s ease-in-out;
         }
-</style>
-<script>
-       /* 光点（サークルの周りを回る） */
-    .particles {
-        position: absolute;
-        width: 250px;
-        height: 250px;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        pointer-events: none;
-    }
 
-    .particle {
-        position: absolute;
-        width: 6px;
-        height: 6px;
-        background: cyan;
-        border-radius: 50%;
-        animation: orbit 5s linear infinite;
-    }
+        /* 光点（サークルの周りを回る） */
+        .particles {
+            position: absolute;
+            width: 250px;
+            height: 250px;
+            pointer-events: none;
+        }
 
-    @keyframes orbit {
-        0% { transform: rotate(0deg) translateX(100px) rotate(0deg); }
-        100% { transform: rotate(360deg) translateX(100px) rotate(-360deg); }
+        .particle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: cyan;
+            border-radius: 50%;
+            animation: orbit 5s linear infinite;
+        }
+
+        @keyframes orbit {
+            0% { transform: rotate(0deg) translateX(130px) rotate(0deg); }
+            100% { transform: rotate(360deg) translateX(130px) rotate(-360deg); }
         }
 
         /* 生年月日入力欄 */
@@ -136,58 +132,52 @@
         <input type="date" id="dob" class="dob-input">
     </div>
 
-    <div class="flash-overlay" id="flashOverlay"></
-<script>
-    // 光点を診断ボタンの円周上に配置
-    function createParticles() {
-        const container = document.getElementById('particleContainer');
-        const particleCount = 12; // 光点の数
-        const radius = 100; // 診断ボタンの周囲の半径
+    <div class="flash-overlay" id="flashOverlay"></div>
 
-        for (let i = 0; i < particleCount; i++) {
-            let particle = document.createElement('div');
-            particle.classList.add('particle');
-
-            let angle = (i / particleCount) * 360; // 均等配置
-            let x = radius * Math.cos(angle * (Math.PI / 180));
-            let y = radius * Math.sin(angle * (Math.PI / 180));
-
-            particle.style.left = `calc(50% + ${x}px)`;
-            particle.style.top = `calc(50% + ${y}px)`;
-            particle.style.animation = `orbit ${4 + Math.random() * 2}s linear infinite`;
-
-            container.appendChild(particle);
-        }
-    }
-
-    createParticles();
-
-    // 診断ボタンのアニメーションとページ遷移
-    function startDiagnosis() {
-        let circle = document.getElementById('diagnosisCircle');
-        let circleText = document.getElementById('circleText');
-        let flashOverlay = document.getElementById('flashOverlay');
-        let particleContainer = document.getElementById('particleContainer');
-        let dob = document.getElementById('dob').value;
-
-        if (!dob) {
-            alert("生年月日を入力してください！");
-            return;
+    <script>
+        // 光点を診断ボタンの周囲に配置
+        function createParticles() {
+            const container = document.getElementById('particleContainer');
+            for (let i = 0; i < 12; i++) {
+                let particle = document.createElement('div');
+                particle.classList.add('particle');
+                let angle = (i / 12) * 360;
+                let duration = 5 + Math.random() * 2; 
+                particle.style.animation = `orbit ${duration}s linear infinite`;
+                particle.style.transform = `rotate(${angle}deg) translateX(130px)`;
+                container.appendChild(particle);
+            }
         }
 
-        // 診断ボタンの拡大とフェードアウト
-        circle.classList.add('glow');
-        circleText.style.opacity = '0';
-        particleContainer.style.opacity = '0.3';
+        createParticles();
 
-        // 画面全体を白くするエフェクト（スムーズに開始）
-        setTimeout(() => {
-            flashOverlay.classList.add('active');
-        }, 1200);
+        // 診断ボタンのアニメーションとページ遷移
+        function startDiagnosis() {
+            let circle = document.getElementById('diagnosisCircle');
+            let circleText = document.getElementById('circleText');
+            let flashOverlay = document.getElementById('flashOverlay');
+            let dob = document.getElementById('dob').value;
 
-        // 診断ページへスムーズに遷移
-        setTimeout(() => {
-            window.location.href = `diagnosis_result.html?dob=${dob}`;
-        }, 1800);
-    }
-</script>
+            if (!dob) {
+                alert("生年月日を入力してください！");
+                return;
+            }
+
+            // 診断ボタンを拡大して光らせる
+            circle.classList.add('glow');
+            circleText.classList.add('fade-text');
+
+            // 画面全体を白くするエフェクト（遅めに開始）
+            setTimeout(() => {
+                flashOverlay.classList.add('active');
+            }, 1500);
+
+            // 診断ページへスムーズに遷移
+            setTimeout(() => {
+                window.location.href = `diagnosis_result.html?dob=${dob}`;
+            }, 2000);
+        }
+    </script>
+
+</body>
+</html>
