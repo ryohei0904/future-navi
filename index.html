@@ -12,6 +12,7 @@
             font-family: Arial, sans-serif;
             overflow: hidden;
             position: relative;
+            transition: background-color 1.8s ease-in-out;
         }
 
         .container {
@@ -55,9 +56,12 @@
             box-shadow: 0 0 300px 100px rgba(0, 255, 255, 1);
         }
 
-        .circle.fade-text {
+        .circle span {
+            transition: opacity 1.5s ease-in-out;
+        }
+
+        .circle.fade-text span {
             opacity: 0;
-            transition: opacity 1s ease-in-out;
         }
 
         /* 光点（サークルの周りを回る） */
@@ -82,21 +86,6 @@
             100% { transform: rotate(360deg) translateX(130px) rotate(-360deg); }
         }
 
-        /* 生年月日入力欄 */
-        .dob-input {
-            font-size: 18px;
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
-            text-align: center;
-            width: 180px;
-            background: black;
-            color: white;
-            border: 2px solid cyan;
-            box-shadow: 0 0 10px cyan;
-            margin-top: 20px;
-        }
-
         /* ページ遷移時のフラッシュエフェクト */
         .flash-overlay {
             position: fixed;
@@ -113,7 +102,6 @@
         .flash-overlay.active {
             opacity: 1;
             visibility: visible;
-            transition: opacity 1.8s ease-in-out;
         }
     </style>
 </head>
@@ -135,119 +123,62 @@
     <div class="flash-overlay" id="flashOverlay"></div>
 
     <script>
-        <style>
-  body {
-    background-color: black;
-    overflow: hidden;
-    transition: background-color 1.5s ease-in-out;
-  }
+        function startDiagnosis() {
+            let circle = document.getElementById("diagnosisCircle");
+            let text = document.getElementById("circleText");
+            let flash = document.getElementById("flashOverlay");
 
-  .circle-container {
-    position: absolute;
-    width: 200px;
-    height: 200px;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(0, 255, 255, 0.8), rgba(0, 0, 0, 0));
-    box-shadow: 0 0 20px 10px rgba(0, 255, 255, 0.6);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: transform 1.8s ease-in-out, box-shadow 1.8s ease-in-out;
-  }
+            // テキストフェードアウト
+            text.classList.add("fade-text");
 
-  .circle-text {
-    font-size: 24px;
-    color: white;
-    transition: opacity 1s ease-in-out;
-  }
+            // サークル拡大
+            setTimeout(() => {
+                circle.classList.add("glow");
+            }, 500);
 
-  .hidden {
-    opacity: 0;
-  }
+            // 画面フラッシュエフェクト
+            setTimeout(() => {
+                flash.classList.add("active");
+                setTimeout(() => {
+                    window.location.href = "result.html"; // 診断結果ページへ
+                }, 1000);
+            }, 1500);
+        }
 
-  .expand {
-    transform: translate(-50%, -50%) scale(8);
-    box-shadow: 0 0 50px 30px rgba(0, 255, 255, 1);
-  }
+        // 光点の配置とアニメーション
+        function createParticles() {
+            let container = document.getElementById("particleContainer");
+            let numParticles = 10;
+            let radius = 90; // サークルの周りを回る光点の半径
 
-  .light-particles {
-    position: absolute;
-    width: 8px;
-    height: 8px;
-    background: cyan;
-    border-radius: 50%;
-    box-shadow: 0 0 10px cyan;
-  }
+            for (let i = 0; i < numParticles; i++) {
+                let particle = document.createElement("div");
+                particle.classList.add("particle");
+                container.appendChild(particle);
 
-  .fade-out {
-    background-color: white !important;
-  }
-</style>
+                let angle = (i / numParticles) * 2 * Math.PI;
+                let x = Math.cos(angle) * radius;
+                let y = Math.sin(angle) * radius;
 
-<div class="circle-container" id="diagnosisCircle">
-  <span class="circle-text" id="diagnosisText">診断を開始</span>
-</div>
+                particle.style.transform = `translate(${x}px, ${y}px)`;
 
-<script>
-  document.getElementById("diagnosisCircle").addEventListener("click", function () {
-    let circle = document.getElementById("diagnosisCircle");
-    let text = document.getElementById("diagnosisText");
+                animateParticle(particle, angle, radius);
+            }
+        }
 
-    // テキストフェードアウト
-    text.classList.add("hidden");
+        function animateParticle(particle, angle, radius) {
+            let speed = 0.02; // 軌道回転速度
+            function move() {
+                angle += speed;
+                let x = Math.cos(angle) * radius;
+                let y = Math.sin(angle) * radius;
+                particle.style.transform = `translate(${x}px, ${y}px)`;
+                requestAnimationFrame(move);
+            }
+            move();
+        }
 
-    // サークル拡大
-    setTimeout(() => {
-      circle.classList.add("expand");
-    }, 300);
-
-    // 画面フラッシュエフェクト
-    setTimeout(() => {
-      document.body.classList.add("fade-out");
-      setTimeout(() => {
-        window.location.href = "result.html"; // 診断結果ページへ
-      }, 500);
-    }, 1500);
-  });
-
-  // 光点の配置とアニメーション
-  function createLightParticles() {
-    let container = document.body;
-    let numParticles = 10;
-    let radius = 100; // 円の半径
-
-    for (let i = 0; i < numParticles; i++) {
-      let particle = document.createElement("div");
-      particle.classList.add("light-particles");
-      container.appendChild(particle);
-
-      let angle = (i / numParticles) * 2 * Math.PI;
-      let x = Math.cos(angle) * radius;
-      let y = Math.sin(angle) * radius;
-
-      particle.style.transform = `translate(${x + window.innerWidth / 2}px, ${y + window.innerHeight / 2}px)`;
-
-      animateParticle(particle, angle, radius);
-    }
-  }
-
-  function animateParticle(particle, angle, radius) {
-    let speed = 0.02; // 軌道回転速度
-    function move() {
-      angle += speed;
-      let x = Math.cos(angle) * radius;
-      let y = Math.sin(angle) * radius;
-      particle.style.transform = `translate(${x + window.innerWidth / 2}px, ${y + window.innerHeight / 2}px)`;
-      requestAnimationFrame(move);
-    }
-    move();
-  }
-
-  createLightParticles();
-</script>
+        createParticles();
     </script>
 
 </body>
