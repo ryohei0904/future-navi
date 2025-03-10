@@ -76,15 +76,36 @@
     </div>
 
     <script>
+        function calculateLifePathNumber(birthdate) {
+            let numbers = birthdate.replace(/-/g, '').split('').map(Number);
+            let sum = numbers.reduce((a, b) => a + b, 0);
+            while (sum > 9) {
+                sum = sum.toString().split('').map(Number).reduce((a, b) => a + b, 0);
+            }
+            return sum;
+        }
+
+        function getScore(lifePathNumber) {
+            return (lifePathNumber * 11) % 100;
+        }
+
+        window.onload = function() {
+            const params = new URLSearchParams(window.location.search);
+            let birthdate = params.get("dob");
+            if (birthdate) {
+                let lifePathNumber = calculateLifePathNumber(birthdate);
+                animateProgress("love", getScore(lifePathNumber + 1));
+                animateProgress("career", getScore(lifePathNumber + 3));
+                animateProgress("health", getScore(lifePathNumber + 5));
+            } else {
+                animateProgress("love", Math.floor(Math.random() * 100));
+                animateProgress("career", Math.floor(Math.random() * 100));
+                animateProgress("health", Math.floor(Math.random() * 100));
+            }
+        }
+
         function animateProgress(id, value) {
             document.getElementById(id).style.width = value + "%";
-        }
-        
-        // ランダムに運勢スコアを設定
-        window.onload = function() {
-            animateProgress("love", Math.floor(Math.random() * 100));
-            animateProgress("career", Math.floor(Math.random() * 100));
-            animateProgress("health", Math.floor(Math.random() * 100));
         }
         
         function unlockFullPrediction() {
