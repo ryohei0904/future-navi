@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔮 未来ナビ プレミアムプラン</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #0d1117;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+        }
+        .container {
+            max-width: 700px;
+            margin: auto;
+            background: #161b22;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 20px rgba(0, 255, 255, 0.5);
+        }
+        .plan {
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            text-align: left;
+        }
+        h2 {
+            color: #00ccff;
+        }
+        .price {
+            font-size: 24px;
+            font-weight: bold;
+            color: #ffcc00;
+        }
+        .subscribe-button {
+            background: #ffcc00;
+            color: #000;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            display: block;
+            margin: 10px auto;
+        }
+        .subscribe-button:hover {
+            background: #ff9900;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔮 未来ナビ プレミアムプラン</h1>
+        <p>未来をより良くするための占い＋コーチングプランをご用意！</p>
+        
+        <div class="plan">
+            <h2>✨ ベーシックプラン</h2>
+            <p class="price">月額 980円</p>
+            <ul>
+                <li>✅ 毎日の運勢＋行動アドバイス（AI自動生成）</li>
+                <li>✅ 1週間・1ヶ月後の運勢予測</li>
+                <li>✅ 未来の分岐シミュレーション（月1回更新）</li>
+                <li>✅ 「運気アップ行動リスト」提供</li>
+            </ul>
+            <button class="subscribe-button" onclick="subscribe('basic')">ベーシックプランに登録</button>
+        </div>
+        
+        <div class="plan">
+            <h2>💎 プレミアムプラン</h2>
+            <p class="price">月額 1,500円</p>
+            <ul>
+                <li>✅ <b>ベーシックのすべての特典</b></li>
+                <li>✅ AIコーチングによる個別開運アドバイス</li>
+                <li>✅ 3ヶ月後・半年後の未来予測レポート</li>
+                <li>✅ プレミアム限定占いコンテンツ</li>
+                <li>✅ 毎月1回の「運勢Q&Aサポート」</li>
+            </ul>
+            <button class="subscribe-button" onclick="subscribe('premium')">プレミアムプランに登録</button>
+        </div>
+        
+        <p>🆓 初月500円 or 7日間無料でお試し可能！</p>
+    </div>
+
+    <script>
+        function subscribe(plan) {
+            alert("🚀 " + (plan === 'basic' ? "ベーシックプラン" : "プレミアムプラン") + " への登録は現在準備中です！");
+        }
+    </script>
+</body>
+</html>
