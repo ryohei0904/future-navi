@@ -70,35 +70,38 @@
         <input type="date" class="input-box" id="birthdate">
     </div>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            document.getElementById("start-diagnosis").addEventListener("click", function() {
-                let circle = this;
-                let birthdate = document.getElementById('birthdate').value;
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    // 「診断を開始」ボタンのクリックイベント
+    document.querySelector(".neon-circle").addEventListener("click", function() {
+        let button = document.getElementById("start-diagnosis");
+        let birthdate = document.getElementById('birthdate').value;
 
-                if (birthdate) {
-                    // サークルを強く発光 & 拡大
-                    circle.style.animation = "flashEffect 0.6s forwards";
+        if (birthdate) {
+            // ネオン発光エフェクト
+            this.style.boxShadow = "0 0 50px rgba(0, 170, 255, 1)";
+            this.style.transform = "scale(1.1)";
 
-                    // 0.6秒後に診断結果ページへ遷移
-                    setTimeout(() => {
-                        window.location.href = `diagnosis_result.html?dob=${birthdate}`;
-                    }, 600);
-                } else {
-                    alert("生年月日を入力してください！");
-                }
-            });
+            // 0.5秒後に診断結果ページへ遷移（生年月日をパラメータに追加）
+            setTimeout(() => {
+                window.location.href = `diagnosis_result.html?dob=${birthdate}`;
+            }, 500);
+        } else {
+            alert("生年月日を入力してください！");
+        }
+    });
 
-            // デフォルトの日付をセット
-            let birthdateInput = document.getElementById('birthdate');
-            if (birthdateInput) {
-                let today = new Date();
-                let formattedDate = today.getFullYear() + '-' + 
-                    ('0' + (today.getMonth() + 1)).slice(-2) + '-' + 
-                    ('0' + today.getDate()).slice(-2);
-                birthdateInput.value = formattedDate;
-            }
-        });
-    </script>
+    // 日付入力欄に現在の日付をデフォルトで設定
+    let birthdateInput = document.getElementById('birthdate');
+    if (birthdateInput) {
+        let today = new Date();
+        let formattedDate = today.getFullYear() + '-' + 
+            ('0' + (today.getMonth() + 1)).slice(-2) + '-' + 
+            ('0' + today.getDate()).slice(-2);
+        birthdateInput.value = formattedDate;
+    }
+});
+</script>
+
 </body>
 </html>
