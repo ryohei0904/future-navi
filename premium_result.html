@@ -80,6 +80,14 @@
     </div>
 
     <script>
+        window.onload = function() {
+    const params = new URLSearchParams(window.location.search);
+    let birthdate = params.get("dob");
+
+    if (birthdate) {
+        document.getElementById("dob-display").innerText = `あなたの生年月日: ${birthdate}`;
+    }
+};
         function goBack() {
             window.location.href = "diagnosis_result.html";
         }
