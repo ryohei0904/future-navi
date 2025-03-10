@@ -38,6 +38,22 @@
             width: 0;
             transition: width 1s ease-in-out;
         }
+        .analysis {
+            font-size: 14px;
+            margin-top: 10px;
+            color: #ccc;
+        }
+        .future-hint {
+            font-size: 16px;
+            margin-top: 20px;
+            color: #ffcc00;
+        }
+        .premium-hint {
+            font-size: 16px;
+            margin-top: 20px;
+            color: #ff6600;
+            font-weight: bold;
+        }
         button {
             background: #00ccff;
             color: #000;
@@ -60,18 +76,24 @@
         <div class="section">
             <h3>💖 恋愛運</h3>
             <div class="progress"><div id="love"></div></div>
+            <p class="analysis" id="love-text"></p>
         </div>
         
         <div class="section">
             <h3>💼 仕事運</h3>
             <div class="progress"><div id="career"></div></div>
+            <p class="analysis" id="career-text"></p>
         </div>
         
         <div class="section">
             <h3>🩺 健康運</h3>
             <div class="progress"><div id="health"></div></div>
+            <p class="analysis" id="health-text"></p>
         </div>
         
+        <p class="future-hint">📢 今日の特別メッセージ: <span id="daily-message"></span></p>
+        
+        <p class="premium-hint">🔓 あなたの未来には重要な選択が待っています…<br>詳細な未来シナリオを開放しませんか？</p>
         <button onclick="redirectToPayment()">🔓 詳細解析を開放する</button>
     </div>
 
@@ -89,23 +111,44 @@
             return (lifePathNumber * 11) % 100;
         }
 
+        function getAnalysisText(score, type) {
+            if (type === 'love') {
+                return score > 70 ? "あなたの恋愛運は絶好調！理想的な出会いがあるかも。" : score > 40 ? "恋愛運は普通。今は自分磨きの時期。" : "恋愛運は低め。焦らずタイミングを待とう。";
+            } else if (type === 'career') {
+                return score > 70 ? "仕事運は絶好調！昇進や新しいチャンスがあるかも。" : score > 40 ? "仕事運は安定。大きな決断は慎重に。" : "仕事運は低め。今は準備期間としてスキルを磨こう。";
+            } else {
+                return score > 70 ? "健康運は良好！エネルギッシュに活動できる時期。" : score > 40 ? "健康運は普通。バランスの取れた生活を心掛けて。" : "健康運は低め。無理せず休息を大切に。";
+            }
+        }
+
+        function getDailyMessage() {
+            const messages = [
+                "今日は直感を信じるべき日！", 
+                "人との縁が強まる日。新しい出会いに期待！", 
+                "冷静な判断が成功を引き寄せるかも！", 
+                "リラックスを意識すると運気アップ！"
+            ];
+            return messages[Math.floor(Math.random() * messages.length)];
+        }
+
         window.onload = function() {
             const params = new URLSearchParams(window.location.search);
             let birthdate = params.get("dob");
             if (birthdate) {
                 let lifePathNumber = calculateLifePathNumber(birthdate);
-                animateProgress("love", getScore(lifePathNumber + 1));
-                animateProgress("career", getScore(lifePathNumber + 3));
-                animateProgress("health", getScore(lifePathNumber + 5));
-            } else {
-                animateProgress("love", Math.floor(Math.random() * 100));
-                animateProgress("career", Math.floor(Math.random() * 100));
-                animateProgress("health", Math.floor(Math.random() * 100));
+                let loveScore = getScore(lifePathNumber + 1);
+                let careerScore = getScore(lifePathNumber + 3);
+                let healthScore = getScore(lifePathNumber + 5);
+                animateProgress("love", loveScore, "love");
+                animateProgress("career", careerScore, "career");
+                animateProgress("health", healthScore, "health");
             }
+            document.getElementById("daily-message").innerText = getDailyMessage();
         }
 
-        function animateProgress(id, value) {
+        function animateProgress(id, value, type) {
             document.getElementById(id).style.width = value + "%";
+            document.getElementById(id + "-text").innerText = getAnalysisText(value, type);
         }
         
         function redirectToPayment() {
