@@ -33,8 +33,8 @@
             font-style: italic;
             color: #ffcc00;
         }
-        .back-button {
-            background: #00ccff;
+        .back-button, .unlock-button {
+            background: #ffcc00;
             color: #000;
             padding: 10px 15px;
             border: none;
@@ -42,41 +42,57 @@
             cursor: pointer;
             margin-top: 20px;
         }
-        .back-button:hover {
-            background: #0099cc;
+        .back-button:hover, .unlock-button:hover {
+            background: #ff9900;
+        }
+        .locked-content {
+            filter: blur(5px); /* 🔹 モザイク（ぼかし）を適用 */
+            pointer-events: none;
+            user-select: none;
+            transition: filter 0.5s ease-in-out;
+        }
+        .unlocked {
+            filter: none;
+            pointer-events: auto;
+            user-select: auto;
+        }
+        .unlock-message {
+            display: none;
+            margin-top: 10px;
+            color: #ffcc00;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>🔮 プレミアム未来診断</h1>
-        <p>あなたの3年後の未来を詳細に解析しました！</p>
+        <p>詳細な未来診断はプレミアムユーザー限定です！</p>
         <p id="dob-display"></p>
-        <div class="future-section">
-            <h2>🌟 理想の未来</h2>
-            <p>あなたは夢を叶え、理想的な環境で活躍しています。充実した日々を送り、周囲からも尊敬される存在になっています。</p>
+
+        <div id="premium-content" class="locked-content">
+            <div class="future-section">
+                <h2>🌟 理想の未来</h2>
+                <p>あなたは夢を叶え、理想的な環境で活躍しています。充実した日々を送り、周囲からも尊敬される存在になっています。</p>
+            </div>
+            
+            <div class="future-section">
+                <h2>⚖ 普通の未来</h2>
+                <p>あなたの未来は安定していますが、特に大きな変化はありません。自分次第で大きく成長できる可能性があります。</p>
+            </div>
+            
+            <div class="future-section">
+                <h2>💥 予想外の未来</h2>
+                <p>あなたの未来には大きな転機が待っています。ピンチをチャンスに変えることで、新しい道が開かれるでしょう。</p>
+            </div>
         </div>
-        
-        <div class="future-section">
-            <h2>⚖ 普通の未来</h2>
-            <p>あなたの未来は安定していますが、特に大きな変化はありません。自分次第で大きく成長できる可能性があります。</p>
-        </div>
-        
-        <div class="future-section">
-            <h2>💥 予想外の未来</h2>
-            <p>あなたの未来には大きな転機が待っています。ピンチをチャンスに変えることで、新しい道が開かれるでしょう。</p>
-        </div>
-        
-        <p class="advice">✨ あなたの未来をより良くするためのアドバイス: 自分の強みを活かし、ポジティブに行動することが成功の鍵です！</p>
-        
+
+        <!-- 🔹 500円ボタン（モザイク解除） -->
+        <button class="unlock-button" onclick="unlockContent()">🔓 500円で詳細を開放する</button>
+        <p id="unlock-message" class="unlock-message">🔓 決済準備中です！現在は無料で開放中！</p>
+
         <button class="back-button" onclick="goBackWithParams()">🔙 診断結果に戻る</button>
         <button class="back-button" onclick="goToHome()">🏠 診断トップへ戻る</button>
-        
-        <div class="future-section">
-            <h2>🔍 もっと詳しく知る</h2>
-            <p>3年後のあなたの未来をさらに詳しく解析できます！</p>
-            <button class="back-button" onclick="goToAdvanced()">🔎 詳細診断を見る</button>
-        </div>
     </div>
 
 <script>
@@ -90,8 +106,20 @@
     };
 
     function unlockContent() {
-        document.getElementById("premium-content").classList.add("unlocked");
-        document.getElementById("unlock-message").style.display = "block"; // 🔹 メッセージを表示
+        let premiumContent = document.getElementById("premium-content");
+        let unlockMessage = document.getElementById("unlock-message");
+
+        if (premiumContent) {
+            premiumContent.classList.add("unlocked"); // 🔓 モザイク解除
+        } else {
+            console.error("❌ Error: premium-content の ID が見つかりません！");
+        }
+
+        if (unlockMessage) {
+            unlockMessage.style.display = "block"; // 🔔 メッセージ表示
+        } else {
+            console.error("❌ Error: unlock-message の ID が見つかりません！");
+        }
     }
 
     function goBackWithParams() {
@@ -103,6 +131,10 @@
         } else {
             window.location.href = "diagnosis_result.html";
         }
+    }
+
+    function goToHome() {
+        window.location.href = "index.html"; // 診断トップへ戻る
     }
 </script>
 </body>
