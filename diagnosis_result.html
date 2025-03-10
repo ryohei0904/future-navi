@@ -128,9 +128,15 @@ window.onload = function() {
         let careerScore = getScore(lifePathNumber + 3);
         let healthScore = getScore(lifePathNumber + 5);
 
-        animateProgress("love", loveScore, "love");
-        animateProgress("career", careerScore, "career");
-        animateProgress("health", healthScore, "health");
+        document.getElementById("love").style.width = "0%";
+        document.getElementById("career").style.width = "0%";
+        document.getElementById("health").style.width = "0%";
+
+        setTimeout(() => {
+            animateProgress("love", loveScore);
+            animateProgress("career", careerScore);
+            animateProgress("health", healthScore);
+        }, 100);
 
         document.getElementById("love-text").innerText = getAnalysisText(loveScore, "love");
         document.getElementById("career-text").innerText = getAnalysisText(careerScore, "career");
@@ -138,7 +144,7 @@ window.onload = function() {
     }
 };
 
-function animateProgress(id, value, type) {
+function animateProgress(id, value) {
     let elem = document.getElementById(id);
     let width = 0;
     let interval = setInterval(function() {
@@ -149,6 +155,7 @@ function animateProgress(id, value, type) {
             elem.style.width = width + "%";
         }
     }, 10);
+}
 }
     </script>
 </body>
