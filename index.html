@@ -13,151 +13,137 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            position: relative;
+            font-family: Arial, sans-serif;
         }
-
+        
         .container {
             position: relative;
             text-align: center;
+            color: white;
+            z-index: 2;
         }
 
-        .button {
-            width: 120px;
-            height: 120px;
-            background-color: rgba(0, 255, 255, 0.7);
+        .circle {
+            width: 150px;
+            height: 150px;
+            background: radial-gradient(circle, rgba(0, 255, 255, 0.8), rgba(0, 255, 255, 0.3));
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
             font-size: 18px;
             font-weight: bold;
-            color: white;
             cursor: pointer;
+            transition: transform 1.5s ease-in-out, opacity 1s ease-in-out;
             position: relative;
-            box-shadow: 0 0 20px rgba(0, 255, 255, 0.8);
-            transition: transform 0.3s ease-in-out;
+            z-index: 3;
         }
 
-        .button:active {
-            transform: scale(0.9);
+        .circle.expanding {
+            transform: scale(50);
+            opacity: 0;
         }
 
-        .ripple {
+        .text {
             position: absolute;
-            border-radius: 50%;
-            background: rgba(0, 255, 255, 0.5);
-            transform: scale(0);
-            animation: ripple-animation 1s forwards;
+            font-size: 24px;
+            font-weight: bold;
+            transition: opacity 0.8s ease-in-out;
         }
 
-        @keyframes ripple-animation {
-            to {
-                transform: scale(4);
+        .text.fade-out {
+            opacity: 0;
+        }
+
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background-color: cyan;
+            border-radius: 50%;
+            animation: moveParticles 3s linear infinite;
+        }
+
+        @keyframes moveParticles {
+            0% {
+                transform: translateY(0) translateX(0);
+                opacity: 1;
+            }
+            50% {
+                transform: translateY(-50px) translateX(50px);
+                opacity: 0.5;
+            }
+            100% {
+                transform: translateY(100px) translateX(-50px);
                 opacity: 0;
             }
         }
 
         .flash {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: white;
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        @keyframes flash-effect {
-            0% { opacity: 0; }
-            50% { opacity: 1; }
-            100% { opacity: 0; }
-        }
-
-        canvas {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
+            background: white;
+            opacity: 0;
+            z-index: 5;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .flash.active {
+            opacity: 1;
         }
     </style>
 </head>
 <body>
-    <canvas id="particleCanvas"></canvas>
+    <div class="flash"></div>
+    <div class="particles"></div>
     <div class="container">
-        <div class="button" id="diagnosisButton">診断開始</div>
+        <div class="text">🔮 未来診断</div>
+        <div class="circle" onclick="startAnimation()">診断を開始</div>
     </div>
-    <div class="flash" id="flashEffect"></div>
-    
+
     <script>
-        // 波紋エフェクト
-        document.getElementById('diagnosisButton').addEventListener('click', function(e) {
-            const ripple = document.createElement('div');
-            ripple.classList.add('ripple');
-            this.appendChild(ripple);
-            ripple.style.width = ripple.style.height = '200px';
-            ripple.style.left = '-40px';
-            ripple.style.top = '-40px';
-            setTimeout(() => ripple.remove(), 1000);
-            
-            // 画面遷移フラッシュ
-            const flash = document.getElementById('flashEffect');
-            flash.style.animation = 'flash-effect 0.8s forwards';
+        function startAnimation() {
+            let circle = document.querySelector('.circle');
+            let text = document.querySelector('.text');
+            let flash = document.querySelector('.flash');
+
+            text.classList.add('fade-out');  // テキストをフェードアウト
+            circle.classList.add('expanding');  // 円を拡大
+
             setTimeout(() => {
-                flash.style.animation = '';
+                flash.classList.add('active'); // フラッシュエフェクト
             }, 1000);
-        });
 
-        // 背景の粒子アニメーション
-        const canvas = document.getElementById("particleCanvas");
-        const ctx = canvas.getContext("2d");
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        let particlesArray = [];
+            setTimeout(() => {
+                window.location.href = "diagnosis.html"; // 診断ページに遷移
+            }, 1500);
+        }
 
-        class Particle {
-            constructor() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 3 + 1;
-                this.speedX = Math.random() * 2 - 1;
-                this.speedY = Math.random() * 2 - 1;
-            }
+        function createParticles() {
+            const particlesContainer = document.querySelector('.particles');
 
-            update() {
-                this.x += this.speedX;
-                this.y += this.speedY;
-                if (this.x > canvas.width || this.x < 0) this.speedX *= -1;
-                if (this.y > canvas.height || this.y < 0) this.speedY *= -1;
-            }
-
-            draw() {
-                ctx.fillStyle = "rgba(0, 255, 255, 0.7)";
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
+            for (let i = 0; i < 20; i++) {
+                let particle = document.createElement('div');
+                particle.classList.add('particle');
+                particle.style.left = Math.random() * window.innerWidth + "px";
+                particle.style.top = Math.random() * window.innerHeight + "px";
+                particlesContainer.appendChild(particle);
             }
         }
 
-        function initParticles() {
-            particlesArray = [];
-            for (let i = 0; i < 30; i++) {
-                particlesArray.push(new Particle());
-            }
-        }
-
-        function animateParticles() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            for (let particle of particlesArray) {
-                particle.update();
-                particle.draw();
-            }
-            requestAnimationFrame(animateParticles);
-        }
-
-        initParticles();
-        animateParticles();
+        createParticles();
     </script>
 </body>
 </html>
