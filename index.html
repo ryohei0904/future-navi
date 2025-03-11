@@ -14,10 +14,11 @@
             align-items: center;
             height: 100vh;
             font-family: Arial, sans-serif;
-        }
-        
-        .container {
             position: relative;
+        }
+
+        .container {
+            position: absolute;
             text-align: center;
             color: white;
             z-index: 2;
@@ -70,21 +71,15 @@
             height: 6px;
             background-color: cyan;
             border-radius: 50%;
-            animation: moveParticles 3s linear infinite;
+            animation: orbit 3s linear infinite;
         }
 
-        @keyframes moveParticles {
+        @keyframes orbit {
             0% {
-                transform: translateY(0) translateX(0);
-                opacity: 1;
-            }
-            50% {
-                transform: translateY(-50px) translateX(50px);
-                opacity: 0.5;
+                transform: rotate(0deg) translateX(80px) rotate(0deg);
             }
             100% {
-                transform: translateY(100px) translateX(-50px);
-                opacity: 0;
+                transform: rotate(360deg) translateX(80px) rotate(-360deg);
             }
         }
 
@@ -134,11 +129,13 @@
         function createParticles() {
             const particlesContainer = document.querySelector('.particles');
 
-            for (let i = 0; i < 20; i++) {
+            for (let i = 0; i < 15; i++) {
                 let particle = document.createElement('div');
                 particle.classList.add('particle');
-                particle.style.left = Math.random() * window.innerWidth + "px";
-                particle.style.top = Math.random() * window.innerHeight + "px";
+                let angle = (i / 15) * 360; // 均等配置
+                let delay = Math.random() * 3;
+                particle.style.animationDelay = `-${delay}s`;
+                particle.style.transform = `rotate(${angle}deg) translateX(80px) rotate(-${angle}deg)`;
                 particlesContainer.appendChild(particle);
             }
         }
