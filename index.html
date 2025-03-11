@@ -7,109 +7,112 @@
     <style>
         body {
             background-color: black;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            overflow: hidden;
             color: white;
+            text-align: center;
+            overflow: hidden;
             font-family: Arial, sans-serif;
         }
-
+        .container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
         .circle {
             position: absolute;
-            width: 150px;
-            height: 150px;
-            background: radial-gradient(circle, cyan, transparent);
+            width: 120px;
+            height: 120px;
+            background-color: cyan;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: transform 1.5s ease-in-out, opacity 1s ease-in-out;
+            font-size: 18px;
+            font-weight: bold;
+            transition: transform 1.5s ease-in-out, opacity 0.8s;
         }
-
-        .circle.shrink {
-            transform: scale(10);
-            opacity: 0;
-        }
-
-        .light {
+        .dot {
             position: absolute;
-            width: 8px;
-            height: 8px;
-            background: cyan;
+            width: 10px;
+            height: 10px;
+            background-color: cyan;
             border-radius: 50%;
-            animation: orbit 4s linear infinite;
+            transition: all 0.6s ease-in-out;
         }
-
-        @keyframes orbit {
-            0% { transform: rotate(0deg) translateX(90px) rotate(0deg); }
-            100% { transform: rotate(360deg) translateX(90px) rotate(-360deg); }
-        }
-
-        .hidden {
-            display: none;
-        }
-        
         .fade-out {
-            animation: fadeOut 1.5s forwards;
-        }
-
-        @keyframes fadeOut {
-            0% { opacity: 1; }
-            100% { opacity: 0; }
+            opacity: 0;
         }
     </style>
 </head>
 <body>
 
-    <h1 class="title">🔮 未来診断</h1>
-    <p class="subtitle">あなたの生年月日を入力してください</p>
-    
-    <div class="circle" id="diagnosisCircle">
-        <span class="button-text">診断を開始</span>
+    <div class="container">
+        <div id="start-button" class="circle">診断を開始</div>
     </div>
 
-    <input type="date" id="birthdate" class="hidden">
-
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const circle = document.getElementById("diagnosisCircle");
-            const title = document.querySelector(".title");
-            const subtitle = document.querySelector(".subtitle");
-            const buttonText = document.querySelector(".button-text");
+        document.addEventListener("DOMContentLoaded", () => {
+            const numDots = 12; // 光点の数
+            const button = document.getElementById('start-button');
 
-            // 光点の作成
-            const numLights = 12;
-            for (let i = 0; i < numLights; i++) {
-                let light = document.createElement("div");
-                light.className = "light";
-                document.body.appendChild(light);
-
-                let angle = (i / numLights) * Math.PI * 2;
-                let x = 90 * Math.cos(angle);
-                let y = 90 * Math.sin(angle);
-
-                light.style.left = `calc(50% + ${x}px)`;
-                light.style.top = `calc(50% + ${y}px)`;
-                light.style.animationDelay = `${i * 0.2}s`;
+            function createDots() {
+                for (let i = 0; i < numDots; i++) {
+                    const dot = document.createElement("div");
+                    dot.classList.add("dot");
+                    document.body.appendChild(dot);
+                }
+                updateDotPositions();
             }
 
-            // 診断ボタン押下時のアニメーション
-            circle.addEventListener("click", function () {
-                title.classList.add("fade-out");
-                subtitle.classList.add("fade-out");
-                buttonText.classList.add("fade-out");
+            function updateDotPositions() {
+                const rect = button.getBoundingClientRect();
+                const centerX = rect.left + rect.width / 2;
+                const centerY = rect.top + rect.height / 2;
+                const radius = Math.max(rect.width, rect.height) * 0.8;
+
+                const dots = document.querySelectorAll(".dot");
+                dots.forEach((dot, i) => {
+                    const angle = (i / numDots) * (2 * Math.PI);
+                    const x = centerX + radius * Math.cos(angle);
+                    const y = centerY + radius * Math.sin(angle);
+
+                    dot.style.transform = `translate(${x}px, ${y}px)`;
+                });
+            }
+
+            function animateDots() {
+                const dots = document.querySelectorAll(".dot");
+                dots.forEach((dot, i) => {
+                    const speed = Math.random() * 1.5 + 1;
+                    setInterval(() => {
+                        const angle = ((Date.now() / 1000) * speed + (i / numDots) * Math.PI * 2) % (Math.PI * 2);
+                        const rect = button.getBoundingClientRect();
+                        const centerX = rect.left + rect.width / 2;
+                        const centerY = rect.top + rect.height / 2;
+                        const radius = Math.max(rect.width, rect.height) * 0.8;
+
+                        const x = centerX + radius * Math.cos(angle);
+                        const y = centerY + radius * Math.sin(angle);
+
+                        dot.style.transform = `translate(${x}px, ${y}px)`;
+                    }, 50);
+                });
+            }
+
+            button.addEventListener("click", () => {
+                button.style.transform = "scale(10)";
+                button.style.opacity = "0";
 
                 setTimeout(() => {
-                    circle.classList.add("shrink");
-                }, 500);
-
-                setTimeout(() => {
-                    window.location.href = "result.html"; // 遷移先を指定
-                }, 2000);
+                    window.location.href = "nextpage.html"; // ページ遷移
+                }, 1500);
             });
+
+            createDots();
+            animateDots();
+            window.addEventListener("resize", updateDotPositions);
         });
     </script>
 
