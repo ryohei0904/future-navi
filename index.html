@@ -6,141 +6,112 @@
     <title>未来診断</title>
     <style>
         body {
-            margin: 0;
-            overflow: hidden;
             background-color: black;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
+            justify-content: center;
             height: 100vh;
-            font-family: Arial, sans-serif;
-            position: relative;
-        }
-
-        .container {
-            position: absolute;
-            text-align: center;
+            overflow: hidden;
             color: white;
-            z-index: 2;
+            font-family: Arial, sans-serif;
         }
 
         .circle {
+            position: absolute;
             width: 150px;
             height: 150px;
-            background: radial-gradient(circle, rgba(0, 255, 255, 0.8), rgba(0, 255, 255, 0.3));
+            background: radial-gradient(circle, cyan, transparent);
             border-radius: 50%;
             display: flex;
-            justify-content: center;
             align-items: center;
-            font-size: 18px;
-            font-weight: bold;
-            cursor: pointer;
+            justify-content: center;
             transition: transform 1.5s ease-in-out, opacity 1s ease-in-out;
-            position: relative;
-            z-index: 3;
         }
 
-        .circle.expanding {
-            transform: scale(50);
+        .circle.shrink {
+            transform: scale(10);
             opacity: 0;
         }
 
-        .text {
+        .light {
             position: absolute;
-            font-size: 24px;
-            font-weight: bold;
-            transition: opacity 0.8s ease-in-out;
-        }
-
-        .text.fade-out {
-            opacity: 0;
-        }
-
-        .particles {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-        }
-
-        .particle {
-            position: absolute;
-            width: 6px;
-            height: 6px;
-            background-color: cyan;
+            width: 8px;
+            height: 8px;
+            background: cyan;
             border-radius: 50%;
-            animation: orbit 3s linear infinite;
+            animation: orbit 4s linear infinite;
         }
 
         @keyframes orbit {
-            0% {
-                transform: rotate(0deg) translateX(80px) rotate(0deg);
-            }
-            100% {
-                transform: rotate(360deg) translateX(80px) rotate(-360deg);
-            }
+            0% { transform: rotate(0deg) translateX(90px) rotate(0deg); }
+            100% { transform: rotate(360deg) translateX(90px) rotate(-360deg); }
         }
 
-        .flash {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: white;
-            opacity: 0;
-            z-index: 5;
-            transition: opacity 0.5s ease-in-out;
+        .hidden {
+            display: none;
+        }
+        
+        .fade-out {
+            animation: fadeOut 1.5s forwards;
         }
 
-        .flash.active {
-            opacity: 1;
+        @keyframes fadeOut {
+            0% { opacity: 1; }
+            100% { opacity: 0; }
         }
     </style>
 </head>
 <body>
-    <div class="flash"></div>
-    <div class="particles"></div>
-    <div class="container">
-        <div class="text">🔮 未来診断</div>
-        <div class="circle" onclick="startAnimation()">診断を開始</div>
+
+    <h1 class="title">🔮 未来診断</h1>
+    <p class="subtitle">あなたの生年月日を入力してください</p>
+    
+    <div class="circle" id="diagnosisCircle">
+        <span class="button-text">診断を開始</span>
     </div>
 
+    <input type="date" id="birthdate" class="hidden">
+
     <script>
-        function startAnimation() {
-            let circle = document.querySelector('.circle');
-            let text = document.querySelector('.text');
-            let flash = document.querySelector('.flash');
+        document.addEventListener("DOMContentLoaded", function () {
+            const circle = document.getElementById("diagnosisCircle");
+            const title = document.querySelector(".title");
+            const subtitle = document.querySelector(".subtitle");
+            const buttonText = document.querySelector(".button-text");
 
-            text.classList.add('fade-out');  // テキストをフェードアウト
-            circle.classList.add('expanding');  // 円を拡大
+            // 光点の作成
+            const numLights = 12;
+            for (let i = 0; i < numLights; i++) {
+                let light = document.createElement("div");
+                light.className = "light";
+                document.body.appendChild(light);
 
-            setTimeout(() => {
-                flash.classList.add('active'); // フラッシュエフェクト
-            }, 1000);
+                let angle = (i / numLights) * Math.PI * 2;
+                let x = 90 * Math.cos(angle);
+                let y = 90 * Math.sin(angle);
 
-            setTimeout(() => {
-                window.location.href = "diagnosis.html"; // 診断ページに遷移
-            }, 1500);
-        }
-
-        function createParticles() {
-            const particlesContainer = document.querySelector('.particles');
-
-            for (let i = 0; i < 15; i++) {
-                let particle = document.createElement('div');
-                particle.classList.add('particle');
-                let angle = (i / 15) * 360; // 均等配置
-                let delay = Math.random() * 3;
-                particle.style.animationDelay = `-${delay}s`;
-                particle.style.transform = `rotate(${angle}deg) translateX(80px) rotate(-${angle}deg)`;
-                particlesContainer.appendChild(particle);
+                light.style.left = `calc(50% + ${x}px)`;
+                light.style.top = `calc(50% + ${y}px)`;
+                light.style.animationDelay = `${i * 0.2}s`;
             }
-        }
 
-        createParticles();
+            // 診断ボタン押下時のアニメーション
+            circle.addEventListener("click", function () {
+                title.classList.add("fade-out");
+                subtitle.classList.add("fade-out");
+                buttonText.classList.add("fade-out");
+
+                setTimeout(() => {
+                    circle.classList.add("shrink");
+                }, 500);
+
+                setTimeout(() => {
+                    window.location.href = "result.html"; // 遷移先を指定
+                }, 2000);
+            });
+        });
     </script>
+
 </body>
 </html>
