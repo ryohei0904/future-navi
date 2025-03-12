@@ -1,0 +1,60 @@
+/* style.css1 */
+body {
+    background: black;
+    color: white;
+    font-family: 'Arial', sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+.title {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+.subtitle {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+}
+.diagnosis-circle {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 0, 255, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.orbit {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    box-shadow: 0 0 20px rgba(255, 0, 255, 0.7);
+}
+#start-button {
+    background: transparent;
+    border: none;
+    font-size: 1.5rem;
+    color: white;
+    cursor: pointer;
+}
+.unlock-button {
+    margin-top: 20px;
+    background: linear-gradient(45deg, #ff00ff, #ff5500);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(255, 0, 255, 0.7);
+}
