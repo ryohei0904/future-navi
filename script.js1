@@ -1,0 +1,17 @@
+// script.js
+document.addEventListener("DOMContentLoaded", () => {
+    const button = document.getElementById("start-button");
+    button.addEventListener("click", () => {
+        alert("Diagnosis started!");
+    });
+
+    // 光点のアニメーション
+    const orbit = document.querySelector(".orbit");
+    let angle = 0;
+    function animateOrbit() {
+        angle += 0.05;
+        orbit.style.transform = `rotate(${angle}deg)`;
+        requestAnimationFrame(animateOrbit);
+    }
+    animateOrbit();
+});
