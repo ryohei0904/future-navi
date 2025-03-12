@@ -63,7 +63,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let rect = button.getBoundingClientRect();
     let centerX = rect.left + rect.width / 2;
     let centerY = rect.top + rect.height / 2;
-    let radius = Math.min(window.innerWidth, window.innerHeight) * 0.12; // スマホサイズに適応した回転半径
+    let radius = Math.min(window.innerWidth, window.innerHeight) * 0.08; // スマホサイズに適応しつつ光点が画面外に出ないよう調整
 
     // 光点を作成し、ページに追加する関数
     function createDots() {
@@ -80,7 +80,7 @@ document.addEventListener("DOMContentLoaded", () => {
         rect = button.getBoundingClientRect(); // 位置情報を更新
         centerX = rect.left + rect.width / 2;
         centerY = rect.top + rect.height / 2;
-        radius = Math.min(window.innerWidth, window.innerHeight) * 0.12;
+        radius = Math.min(window.innerWidth, window.innerHeight) * 0.08; // 再計算して光点が画面外に出ないように調整
 
         const dots = document.querySelectorAll(".dot");
         dots.forEach((dot, i) => {
