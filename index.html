@@ -56,108 +56,63 @@
         // スマホサイズに適応するよう光点の配置を調整
 
 document.addEventListener("DOMContentLoaded", () => {
-    let numDots = Number(localStorage.getItem("numDots")) ?? 12; // `??` 演算子を使用して簡潔にデフォルト値を適用
+    let storedNumDots = localStorage.getItem("numDots");
+    let numDots = Number(storedNumDots) ?? 12;
     if (isNaN(numDots) || numDots < 1 || numDots > 50) {
-        numDots = 12; // 無効な値の場合、デフォルトの12を使用
+        numDots = 12;
     }
-    
-    const button = document.getElementById('start-button'); // ボタン要素を取得
 
-    // 光点を格納するコンテナを作成
-    const dotContainer = document.createElement("div");
-    dotContainer.classList.add("dot-container");
-    document.body.appendChild(dotContainer);
+    const button = document.getElementById("start-button");
 
-    // 光点の位置情報をキャッシュ
-    function updateButtonPosition() {
+    // ボタンの位置キャッシュ用変数
+    let buttonPosition = {};
+
+    function cacheButtonPosition() {
         const rect = button.getBoundingClientRect();
-        return {
+        buttonPosition = {
             centerX: rect.left + rect.width / 2,
             centerY: rect.top + rect.height / 2,
-            radius: Math.min(window.innerWidth, window.innerHeight) * 0.1 // 半径をスマホ画面に最適化
+            radius: rect.width / 2 + 20 // ボタンサイズを考慮して適応
         };
     }
 
-    // 光点を作成し、ページに追加する関数
     function createDots() {
-        while (dotContainer.firstChild) {
-            dotContainer.removeChild(dotContainer.firstChild); // すべての子要素を削除し、イベントリスナーの影響を回避
-        }
+        const dotContainer = document.createElement("div");
+        dotContainer.classList.add("dot-container");
+        document.body.appendChild(dotContainer);
+
         for (let i = 0; i < numDots; i++) {
             const dot = document.createElement("div");
-            dot.classList.add("dot"); // CSSでスタイルを適用するためのクラスを追加
+            dot.classList.add("dot");
             dotContainer.appendChild(dot);
         }
-        updateDotPositions(); // 光点の位置を更新
+
+        updateDotPositions();
     }
 
-    // 光点の位置をボタンの周囲に配置する関数
     function updateDotPositions() {
-        const { centerX, centerY, radius } = updateButtonPosition();
-
         const dots = document.querySelectorAll(".dot");
         dots.forEach((dot, i) => {
-            const angle = (i / numDots) * (2 * Math.PI); // 各光点を円周上に均等配置
-            const x = centerX + radius * Math.cos(angle) - dot.offsetWidth / 2;
-            const y = centerY + radius * Math.sin(angle) - dot.offsetHeight / 2;
+            const angle = (i / numDots) * (2 * Math.PI);
+            const x = buttonPosition.centerX + buttonPosition.radius * Math.cos(angle) - dot.offsetWidth / 2;
+            const y = buttonPosition.centerY + buttonPosition.radius * Math.sin(angle) - dot.offsetHeight / 2;
             dot.style.left = `${x}px`;
-            dot.style.top = `${y}px`; // 位置を適用
+            dot.style.top = `${y}px`;
         });
     }
 
-    // 光点を回転させるアニメーション
-    function animateDots() {
-        const dots = document.querySelectorAll(".dot");
-        const seed = 42; // 一貫性のあるアニメーションのためのシード値
-        function seededRandom(seed) {
-            const x = Math.sin(seed) * 10000;
-            return x - Math.floor(x);
-        }
-        const speeds = Array.from({ length: numDots }, (_, i) => seededRandom(seed + i) * 1.2 + 0.8); // シード値を使用して速度を一定にする
-        let lastTime = performance.now();
-
-        function updateAnimation(time) {
-            const deltaTime = (time - lastTime) / 1000;
-            lastTime = time;
-            const { centerX, centerY, radius } = updateButtonPosition();
-            dots.forEach((dot, i) => {
-                const speed = speeds[i];
-                const targetAngle = ((time / 1000) * speed + (i / numDots) * Math.PI * 2) % (Math.PI * 2);
-                let currentAngle = parseFloat(dot.dataset.angle) || targetAngle;
-                currentAngle += (targetAngle - currentAngle) * 0.1; // 線形補間でスムーズな変化
-                dot.dataset.angle = currentAngle;
-                const x = centerX + radius * Math.cos(currentAngle) - dot.offsetWidth / 2;
-                const y = centerY + radius * Math.sin(currentAngle) - dot.offsetHeight / 2;
-                dot.style.left = `${x}px`;
-                dot.style.top = `${y}px`; // 光点を回転させる
-            });
-            requestAnimationFrame(updateAnimation);
-        }
-        requestAnimationFrame(updateAnimation);
-    }
-
-    // resize イベントの処理を最適化 (debounce 追加)
-    function debounce(func, wait = 100) {
-        let timeout;
-        return (...args) => {
-            clearTimeout(timeout);
-            timeout = setTimeout(() => func.apply(this, args), wait);
-        };
-    }
-    window.addEventListener("resize", debounce(updateDotPositions));
-
-    // ボタンがクリックされたときの処理
     button.addEventListener("click", () => {
-        button.style.transform = `scale(${window.innerWidth / 100})`; // 画面サイズに応じた拡大
-        button.style.opacity = "0"; // ボタンをフェードアウト
+        cacheButtonPosition(); // クリック前にボタンの位置をキャッシュ
+        button.style.transform = "scale(1.5)";
+        button.style.opacity = "0";
 
         setTimeout(() => {
-            window.location.href = "nextpage.html"; // ページ遷移
+            window.location.href = "nextpage.html";
         }, 1500);
     });
 
-    createDots(); // 光点を生成
-    animateDots(); // 光点のアニメーション開始
+    cacheButtonPosition(); // 初期状態でもボタンの位置をキャッシュ
+    createDots();
 });
         </script>
 
