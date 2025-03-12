@@ -3,118 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>未来診断</title>
-    <style>
-        body {
-            background-color: black;
-            color: white;
-            text-align: center;
-            overflow: hidden;
-            font-family: Arial, sans-serif;
-        }
-        .container {
-            position: relative;
-            width: 100%;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .circle {
-            position: absolute;
-            width: 120px;
-            height: 120px;
-            background-color: cyan;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-            font-weight: bold;
-            transition: transform 1.5s ease-in-out, opacity 0.8s;
-        }
-        .dot {
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            background-color: cyan;
-            border-radius: 50%;
-            transition: all 0.6s ease-in-out;
-        }
-        .fade-out {
-            opacity: 0;
-        }
-    </style>
+    <title>Cyberpunk Diagnosis UI</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-
     <div class="container">
-        <div id="start-button" class="circle">診断を開始</div>
+        <div class="header">
+            <span class="title">BIRTHDATE</span>
+            <div class="nav">
+                <span class="active">Diagnosis</span>
+                <span>Prediction</span>
+                <span>Start</span>
+            </div>
+        </div>
+        
+        <div class="main-ui">
+            <div class="diagnosis-circle">
+                <span class="start-text">START DIAGNOSIS</span>
+                <span class="sub-text">Unlock full prediction</span>
+                <div class="rotating-dots"></div>
+            </div>
+            
+            <div class="controls">
+                <input type="range" class="slider" min="1" max="100" value="50">
+                <button class="unlock-btn">UNLOCK NOW</button>
+            </div>
+        </div>
     </div>
-
-    <script>
-        // スマホサイズに適応するよう光点の配置を調整
-
-document.addEventListener("DOMContentLoaded", () => {
-    let storedNumDots = localStorage.getItem("numDots");
-    let numDots = Number(storedNumDots) ?? 12;
-    if (isNaN(numDots) || numDots < 1 || numDots > 50) {
-        numDots = 12;
-    }
-
-    const button = document.getElementById("start-button");
-
-    // ボタンの位置キャッシュ用変数
-    let buttonPosition = {};
-
-    function cacheButtonPosition() {
-        const rect = button.getBoundingClientRect();
-        buttonPosition = {
-            centerX: rect.left + rect.width / 2,
-            centerY: rect.top + rect.height / 2,
-            radius: rect.width / 2 + 20 // ボタンサイズを考慮して適応
-        };
-    }
-
-    function createDots() {
-        const dotContainer = document.createElement("div");
-        dotContainer.classList.add("dot-container");
-        document.body.appendChild(dotContainer);
-
-        for (let i = 0; i < numDots; i++) {
-            const dot = document.createElement("div");
-            dot.classList.add("dot");
-            dotContainer.appendChild(dot);
-        }
-
-        updateDotPositions();
-    }
-
-    function updateDotPositions() {
-        const dots = document.querySelectorAll(".dot");
-        dots.forEach((dot, i) => {
-            const angle = (i / numDots) * (2 * Math.PI);
-            const x = buttonPosition.centerX + buttonPosition.radius * Math.cos(angle) - dot.offsetWidth / 2;
-            const y = buttonPosition.centerY + buttonPosition.radius * Math.sin(angle) - dot.offsetHeight / 2;
-            dot.style.left = `${x}px`;
-            dot.style.top = `${y}px`;
-        });
-    }
-
-    button.addEventListener("click", () => {
-        cacheButtonPosition(); // クリック前にボタンの位置をキャッシュ
-        button.style.transform = "scale(1.5)";
-        button.style.opacity = "0";
-
-        setTimeout(() => {
-            window.location.href = "nextpage.html";
-        }, 1500);
-    });
-
-    cacheButtonPosition(); // 初期状態でもボタンの位置をキャッシュ
-    createDots();
-});
-        </script>
-
+    <script src="script.js"></script>
 </body>
 </html>
