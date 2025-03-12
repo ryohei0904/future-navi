@@ -8,6 +8,16 @@
     <script src="script.js1?v=1.0" defer></script>
 </head>
 <body>
+    <div id="console-log" style="color: red; white-space: pre-wrap; background: black; padding: 10px;"></div>
+    <script>
+        (function() {
+            const oldConsoleError = console.error;
+            console.error = function(message) {
+                document.getElementById("console-log").innerText += message + "\n";
+                oldConsoleError.apply(console, arguments);
+            };
+        })();
+    </script>
     <div class="container">
         <h1>未来診断</h1>
         <p>あなたの未来を診断しましょう！</p>
