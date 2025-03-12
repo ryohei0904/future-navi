@@ -1,95 +1,22 @@
-document.addEventListener("DOMContentLoaded", () => {
-    let storedNumDots = localStorage.getItem("numDots");
-    let numDots = Number(storedNumDots) ?? 12;
-    if (isNaN(numDots) || numDots < 1 || numDots > 50) {
-        numDots = 12;
-    }
-    
-    const button = document.getElementById('start-button');
-    const dotContainer = document.createElement("div");
-    dotContainer.classList.add("dot-container");
-    document.body.appendChild(dotContainer);
-
-    let buttonPosition = updateButtonPosition();
-
-    function updateButtonPosition() {
-        const rect = button.getBoundingClientRect();
-        return {
-            centerX: rect.left + rect.width / 2,
-            centerY: rect.top + rect.height / 2,
-            radius: Math.min(window.innerWidth, window.innerHeight) * 0.1
-        };
-    }
-
-    function createDots() {
-        dotContainer.innerHTML = '';
-        for (let i = 0; i < numDots; i++) {
-            const dot = document.createElement("div");
-            dot.classList.add("dot");
-            dotContainer.appendChild(dot);
-        }
-        updateDotPositions();
-    }
-
-    function updateDotPositions() {
-        buttonPosition = updateButtonPosition();
-        const dots = document.querySelectorAll(".dot");
-        dots.forEach((dot, i) => {
-            const angle = (i / numDots) * (2 * Math.PI);
-            const x = buttonPosition.centerX + buttonPosition.radius * Math.cos(angle) - dot.offsetWidth / 2;
-            const y = buttonPosition.centerY + buttonPosition.radius * Math.sin(angle) - dot.offsetHeight / 2;
-            dot.style.left = `${x}px`;
-            dot.style.top = `${y}px`;
-        });
-    }
-
-    function animateDots() {
-        const dots = document.querySelectorAll(".dot");
-        const seed = 42;
-        const seededRandom = (index) => {
-            const x = Math.sin(seed + index) * 10000;
-            return x - Math.floor(x);
-        };
-        const speeds = Array.from({ length: numDots }, (_, i) => seededRandom(i) * 1.2 + 0.8);
-        let lastTime = performance.now();
-
-        function updateAnimation(time) {
-            const deltaTime = (time - lastTime) / 1000;
-            lastTime = time;
-            buttonPosition = updateButtonPosition();
-            dots.forEach((dot, i) => {
-                const speed = speeds[i];
-                const targetAngle = ((time / 1000) * speed + (i / numDots) * Math.PI * 2) % (Math.PI * 2);
-                let currentAngle = parseFloat(dot.dataset.angle) || targetAngle;
-                currentAngle += (targetAngle - currentAngle) * 0.1;
-                dot.dataset.angle = currentAngle;
-                const x = buttonPosition.centerX + buttonPosition.radius * Math.cos(currentAngle) - dot.offsetWidth / 2;
-                const y = buttonPosition.centerY + buttonPosition.radius * Math.sin(currentAngle) - dot.offsetHeight / 2;
-                dot.style.left = `${x}px`;
-                dot.style.top = `${y}px`;
-            });
-            requestAnimationFrame(updateAnimation);
-        }
-        requestAnimationFrame(updateAnimation);
-    }
-
-    function debounce(func, wait = 100) {
-        let timeout;
-        return (...args) => {
-            clearTimeout(timeout);
-            timeout = setTimeout(() => func.apply(this, args), wait);
-        };
-    }
-    window.addEventListener("resize", debounce(updateDotPositions));
-
-    button.addEventListener("click", () => {
-        button.style.transform = `scale(${window.innerWidth / 100})`;
-        button.style.opacity = "0";
-        setTimeout(() => {
-            window.location.href = "nextpage.html";
-        }, 1500);
-    });
-
-    createDots();
-    animateDots();
-});
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Future Diagnosis</title>
+    <link rel="stylesheet" href="style.css1">
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">START DIAGNOSIS</h1>
+        <p class="subtitle">Unlock full prediction</p>
+        <div class="diagnosis-circle">
+            <div class="orbit"></div>
+            <button id="start-button">ST999</button>
+        </div>
+        <p class="info">One-time payment</p>
+        <button class="unlock-button">UNLOCK NOW</button>
+    </div>
+    <script src="script.js1"></script>
+</body>
+</html>
