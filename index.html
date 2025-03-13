@@ -4,31 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>未来診断</title>
-    <link rel="stylesheet" href="style.css1?v=1.0">
-    <script src="script.js1?v=1.0" defer></script>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-   <div id="console-log" style="color: red; white-space: pre-wrap; background: black; padding: 10px; display: none;"></div>
-<script>
-    (function() {
-        const logDiv = document.getElementById("console-log");
-        const oldConsoleError = console.error;
-        console.error = function(message) {
-            logDiv.style.display = "block"; // エラーが出たときだけ表示
-            logDiv.innerText += message + "\n";
-            oldConsoleError.apply(console, arguments);
-        };
-    })();
-</script>
     <div class="container">
-        <h1>未来診断</h1>
-        <p>あなたの未来を診断しましょう！</p>
-        
-        <!-- 診断開始ボタン -->
-        <button id="start-button">診断を開始</button>
-
-        <!-- 光点エフェクト用のコンテナ -->
-        <div id="dot-container"></div>
+        <div class="circle">
+            <h1 class="title">START DIAGNOSIS</h1>
+            <p class="subtitle">Unlock full prediction</p>
+            <button id="start-button">ST999</button>
+        </div>
+        <div class="bottom-section">
+            <button class="unlock-btn">UNLOCK NOW</button>
+            <p class="payment-info">ONE-TIME PAYMENT</p>
+        </div>
     </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
