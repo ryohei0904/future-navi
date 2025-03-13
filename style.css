@@ -1,0 +1,70 @@
+body {
+    background: black;
+    color: white;
+    font-family: "Arial", sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.circle {
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,0,255,0.8), rgba(0,0,0,0));
+    box-shadow: 0 0 20px rgba(255,0,255,0.8);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.title {
+    font-size: 24px;
+    text-shadow: 0 0 10px white;
+}
+
+.subtitle {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+#start-button {
+    background: rgba(255,0,255,0.8);
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    font-size: 18px;
+    border-radius: 50px;
+    box-shadow: 0 0 10px rgba(255,0,255,0.8);
+    cursor: pointer;
+}
+
+.bottom-section {
+    margin-top: 20px;
+}
+
+.unlock-btn {
+    background: linear-gradient(to right, pink, purple);
+    color: white;
+    border: none;
+    padding: 15px 40px;
+    font-size: 18px;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 0 15px pink;
+}
+
+.payment-info {
+    margin-top: 5px;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.7);
+}
