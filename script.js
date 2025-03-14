@@ -1,47 +1,40 @@
-document.addEventListener("DOMContentLoaded", () => {
-    const startButton = document.getElementById("start-button");
+document.addEventListener("DOMContentLoaded", function() {
+    // 生年月日の選択肢を生成
+    const birthYear = document.getElementById("birth-year");
+    const birthMonth = document.getElementById("birth-month");
+    const birthDay = document.getElementById("birth-day");
 
-    startButton.addEventListener("click", () => {
+    // 年の選択肢（1900年〜今年）
+    for (let i = new Date().getFullYear(); i >= 1900; i--) {
+        let option = document.createElement("option");
+        option.value = i;
+        option.textContent = i;
+        birthYear.appendChild(option);
+    }
+
+    // 月の選択肢（1〜12）
+    for (let i = 1; i <= 12; i++) {
+        let option = document.createElement("option");
+        option.value = i;
+        option.textContent = i;
+        birthMonth.appendChild(option);
+    }
+
+    // 日の選択肢（1〜31）
+    for (let i = 1; i <= 31; i++) {
+        let option = document.createElement("option");
+        option.value = i;
+        option.textContent = i;
+        birthDay.appendChild(option);
+    }
+
+    // 診断開始ボタン
+    document.getElementById("start-button").addEventListener("click", function() {
         alert("Diagnosis started!");
-        // 本番環境では window.location.href = "診断結果ページ.html";
-    document.addEventListener("DOMContentLoaded", function () {
-    const yearSelect = document.getElementById("birth-year");
-    const monthSelect = document.getElementById("birth-month");
-    const daySelect = document.getElementById("birth-day");
+    });
 
-    // 年を追加（現在の年から1900年まで）
-    for (let y = new Date().getFullYear(); y >= 1900; y--) {
-        let option = document.createElement("option");
-        option.value = y;
-        option.textContent = y;
-        yearSelect.appendChild(option);
-    }
-
-    // 月を追加（1月～12月）
-    for (let m = 1; m <= 12; m++) {
-        let option = document.createElement("option");
-        option.value = m;
-        option.textContent = m;
-        monthSelect.appendChild(option);
-    }
-
-    // 日を追加
-    function updateDays() {
-        daySelect.innerHTML = "";
-        let daysInMonth = new Date(yearSelect.value, monthSelect.value, 0).getDate();
-        for (let d = 1; d <= daysInMonth; d++) {
-            let option = document.createElement("option");
-            option.value = d;
-            option.textContent = d;
-            daySelect.appendChild(option);
-        }
-    }
-
-    yearSelect.addEventListener("change", updateDays);
-    monthSelect.addEventListener("change", updateDays);
-
-    // 初期化
-    updateDays();
-});
+    // UNLOCKボタン
+    document.querySelector(".unlock-btn").addEventListener("click", function() {
+        alert("Unlocking full prediction...");
     });
 });
