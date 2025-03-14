@@ -3,33 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>未来診断</title>
+    <title>未来診断 - サイバーAI</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
-        <!-- 中央の診断開始エリア -->
+        <!-- 上部の診断エリア -->
         <div class="circle">
             <h1 class="title">START DIAGNOSIS</h1>
             <p class="subtitle">Unlock full prediction</p>
             <button id="start-button">ST999</button>
         </div>
-
+        
         <!-- 右側の誕生日入力エリア -->
         <div class="birthdate-container">
-            <label for="birth-year">Birth Year:</label>
+            <h3>BIRTHDATE</h3>
             <select id="birth-year"></select>
-
-            <label for="birth-month">Month:</label>
             <select id="birth-month"></select>
-
-            <label for="birth-day">Day:</label>
             <select id="birth-day"></select>
         </div>
-
-        <!-- UNLOCKボタン -->
+        
+        <!-- 左側のデータ解析エリア -->
+        <div class="data-analysis">
+            <p id="matrix-data">010110010110...</p>
+        </div>
+        
+        <!-- 下側の未来予測エリア -->
+        <div class="future-prediction">
+            <p>Future Possibility A</p>
+            <p>Future Possibility B</p>
+            <div class="wave-effect"></div>
+        </div>
+        
+        <!-- Unlockボタン -->
         <div class="bottom-section">
-            <button class="unlock-btn">UNLOCK NOW</button>
+            <button class="unlock-btn">UNLOCK FUTURE</button>
             <p class="payment-info">ONE-TIME PAYMENT</p>
         </div>
     </div>
