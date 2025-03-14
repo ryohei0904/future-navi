@@ -2,27 +2,27 @@
 body {
     background-color: black;
     color: white;
-    font-family: 'Arial', sans-serif;
+    font-family: 'Orbitron', sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     height: 100vh;
-    margin: 0;
 }
 
-/* メインコンテナ */
 .container {
     position: relative;
     width: 90%;
-    max-width: 500px;
-    text-align: center;
+    max-width: 600px;
 }
 
-/* 診断開始ボタンのエリア */
+/* サークル（診断開始エリア） */
 .circle {
-    width: 200px;
-    height: 200px;
+    width: 180px;
+    height: 180px;
     background: radial-gradient(circle, rgba(255,0,255,0.6), transparent);
     border-radius: 50%;
     display: flex;
@@ -32,7 +32,6 @@ body {
     margin-bottom: 20px;
 }
 
-/* ボタン */
 #start-button {
     background: magenta;
     color: white;
@@ -43,11 +42,11 @@ body {
     font-size: 16px;
 }
 
-/* 誕生日入力エリア */
+/* 誕生日入力エリア（右側） */
 .birthdate-container {
     position: absolute;
+    right: -25%;
     top: 50%;
-    right: -20%;
     transform: translateY(-50%);
     background: rgba(0, 0, 0, 0.6);
     padding: 10px;
@@ -58,7 +57,6 @@ body {
     gap: 8px;
 }
 
-/* ドロップダウンのスタイル */
 .birthdate-container select {
     background: black;
     color: white;
@@ -66,7 +64,35 @@ body {
     padding: 5px;
 }
 
-/* UNLOCKボタン */
+/* データ解析エリア（左側） */
+.data-analysis {
+    position: absolute;
+    left: -25%;
+    top: 50%;
+    transform: translateY(-50%);
+    color: cyan;
+    font-size: 12px;
+    white-space: pre-wrap;
+}
+
+/* 未来予測エリア（下側） */
+.future-prediction {
+    margin-top: 20px;
+}
+
+.wave-effect {
+    width: 100px;
+    height: 50px;
+    background: linear-gradient(90deg, cyan, transparent);
+    animation: wave 2s infinite alternate;
+}
+
+@keyframes wave {
+    0% { transform: scaleY(1); }
+    100% { transform: scaleY(1.5); }
+}
+
+/* Unlockボタン */
 .unlock-btn {
     background: linear-gradient(to right, pink, purple);
     color: white;
