@@ -1,20 +1,25 @@
+/* 全体のスタイル調整 */
 body {
     background-color: black;
     color: white;
-    font-family: Arial, sans-serif;
+    font-family: 'Orbitron', sans-serif;
     text-align: center;
-}
-
-.container {
+    margin: 0;
+    padding: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     height: 100vh;
-    padding: 20px;
 }
 
-/* 左側エフェクト */
+.container {
+    position: relative;
+    width: 90%;
+    max-width: 600px;
+}
+
+/* 左側のデータ解析エリア */
 .left-panel {
     position: absolute;
     left: 10px;
@@ -33,25 +38,12 @@ body {
     to { opacity: 0.3; }
 }
 
-.wave-effect {
-    width: 80px;
-    height: 40px;
-    background: linear-gradient(to right, cyan, transparent);
-    border-radius: 50%;
-    animation: wave 2s infinite alternate;
-}
-
-@keyframes wave {
-    from { transform: scaleX(1); }
-    to { transform: scaleX(1.3); }
-}
-
-/* 中央サークル */
+/* 中央の診断開始サークル */
 .circle {
     background: radial-gradient(circle, rgba(128,0,128,0.9) 30%, transparent);
     border-radius: 50%;
-    width: 250px;
-    height: 250px;
+    width: 200px;
+    height: 200px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -65,17 +57,17 @@ body {
     border: none;
     padding: 10px 20px;
     border-radius: 20px;
-    margin-top: 10px;
     cursor: pointer;
+    font-size: 16px;
 }
 
-/* 未来シミュレーション */
+/* 未来シミュレーションエリア */
 .future-options p {
     color: white;
     margin: 5px;
 }
 
-/* 右側 誕生日入力 */
+/* 右側の誕生日入力エリア */
 .birthdate-section {
     position: absolute;
     right: 10px;
@@ -94,12 +86,17 @@ select {
     margin: 5px;
 }
 
-/* アンロックボタン */
+/* UNLOCKボタンの調整（スマホで隠れないように） */
+.bottom-section {
+    margin-top: 30px;
+}
+
 .unlock-btn {
     background: linear-gradient(to right, pink, purple);
     color: white;
     border: none;
     padding: 15px 30px;
     border-radius: 30px;
+    font-size: 18px;
     cursor: pointer;
 }
