@@ -8,29 +8,31 @@
 </head>
 <body>
     <div class="container">
-    <div class="circle">
-        <h1 class="title">START DIAGNOSIS</h1>
-        <p class="subtitle">Unlock full prediction</p>
-        <button id="start-button">ST999</button>
+        <!-- 中央の診断開始エリア -->
+        <div class="circle">
+            <h1 class="title">START DIAGNOSIS</h1>
+            <p class="subtitle">Unlock full prediction</p>
+            <button id="start-button">ST999</button>
+        </div>
+
+        <!-- 右側の誕生日入力エリア -->
+        <div class="birthdate-container">
+            <label for="birth-year">Birth Year:</label>
+            <select id="birth-year"></select>
+
+            <label for="birth-month">Month:</label>
+            <select id="birth-month"></select>
+
+            <label for="birth-day">Day:</label>
+            <select id="birth-day"></select>
+        </div>
+
+        <!-- UNLOCKボタン -->
+        <div class="bottom-section">
+            <button class="unlock-btn">UNLOCK NOW</button>
+            <p class="payment-info">ONE-TIME PAYMENT</p>
+        </div>
     </div>
-
-    <!-- 🔽 ここに誕生日入力欄を追加する 🔽 -->
-    <div class="birthdate-container">
-        <label for="birth-year">Birth Year:</label>
-        <select id="birth-year"></select>
-
-        <label for="birth-month">Month:</label>
-        <select id="birth-month"></select>
-
-        <label for="birth-day">Day:</label>
-        <select id="birth-day"></select>
-    </div>
-
-    <div class="bottom-section">
-        <button class="unlock-btn">UNLOCK NOW</button>
-        <p class="payment-info">ONE-TIME PAYMENT</p>
-    </div>
-</div>
 
     <script src="script.js"></script>
 </body>
