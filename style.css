@@ -31,7 +31,7 @@ body {
     max-height: 250px;
     background: radial-gradient(circle, #8000ff, #4b0082);
     border-radius: 50%;
-    top: 20%;  /* ここで高さを調整 */
+    top: 5%;  /* ここで高さを調整 */
     left: 50%;
     transform: translateX(-50%);
     display: flex;
