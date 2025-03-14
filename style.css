@@ -46,7 +46,7 @@ body {
     background: radial-gradient(circle, #8000ff, #4b0082) !important;
     border-radius: 50% !important;
     position: absolute !important;
-    top: 10% !important;  /* 上方向に少し移動 */
+    top: 10% /* 上方向に少し移動 */
     left: 50% !important;
     transform: translateX(-50%) !important;
     display: flex !important;
