@@ -38,15 +38,16 @@ body {
 }
 
 .circle {
-    width: 60vw;  /* 幅を小さめに調整 */
-    max-width: 250px;  /* 最大サイズを指定 */
+    width: 60vw;  
+    max-width: 250px;
     height: 60vw;
     max-height: 250px;
     background: radial-gradient(circle, #8000ff, #4b0082);
     border-radius: 50%;
     position: absolute;
-    top:15%;  /* 上方向に移動 */
+    top: 1% !important; /* 変更 */
     left: 50%;
+    transform: translateX(-50%); /* translateY を外す */
     display: flex;
     flex-direction: column;
     align-items: center;
