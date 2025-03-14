@@ -1,106 +1,83 @@
-/* 全体のスタイル調整 */
+/* === 全体のスタイル調整 === */
 body {
+    height: 100vh;  /* ビューポート全体をカバー */
+    width: 100vw;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
     background-color: black;
     color: white;
     font-family: 'Orbitron', sans-serif;
     text-align: center;
-    margin: 0;
-    padding: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100vh;
 }
 
+/* === メインコンテナ === */
 .container {
-    position: relative;
     width: 90%;
     max-width: 600px;
+    /* position: relative;  削除 */
 }
 
-/* 左側のデータ解析エリア */
+/* === サークル (中央配置) === */
+.circle {
+    position: fixed;  /* 画面全体を基準に固定 */
+    width: 60vw;
+    max-width: 250px;
+    height: 60vw;
+    max-height: 250px;
+    background: radial-gradient(circle, #8000ff, #4b0082);
+    border-radius: 50%;
+    top: 10%;  /* ここで高さを調整 */
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-align: center;
+}
+
+/* === データ解析エリア (左側) === */
 .left-panel {
     position: absolute;
     left: 10px;
     top: 50%;
 }
 
+/* === データストリーム (エフェクト用) === */
 .data-stream {
     font-size: 14px;
     color: cyan;
     animation: blink 1s infinite alternate;
 }
 
-@keyframes blink {
-    from { opacity: 1; }
-    to { opacity: 0.3; }
-}
-
-.circle {
-    width: 60vw;  
-    max-width: 250px;
-    height: 60vw;
-    max-height: 250px;
-    background: radial-gradient(circle, #8000ff, #4b0082);
-    border-radius: 50%;
-    position: absolute;
-    top: 1% !important; /* 変更 */
+/* === 誕生日入力エリア === */
+.birthdate-box {
+    position: fixed;
+    top: 50%;
     left: 50%;
-    transform: translateX(-50%); /* translateY を外す */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    color: white;
+    transform: translate(-50%, -50%);
+    border: 2px solid #ff00ff;
+    padding: 15px;
+    border-radius: 10px;
     text-align: center;
 }
 
-#start-button {
-    background-color: magenta;
+/* === アンロックボタン === */
+.unlock-button {
+    position: fixed;
+    bottom: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(to right, #ff00ff, #ff0080);
     color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 20px;
-    cursor: pointer;
-    font-size: 16px;
-}
-
-/* 未来シミュレーションエリア */
-.future-options p {
-    color: white;
-    margin: 5px;
-}
-
-/* 右側の誕生日入力エリア */
-.birthdate-section {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    padding: 10px;
-    border: 2px solid magenta;
-    border-radius: 10px;
-}
-
-select {
-    background: black;
-    color: white;
-    border: 1px solid magenta;
-    padding: 5px;
-    margin: 5px;
-}
-
-/* UNLOCKボタンの調整（スマホで隠れないように） */
-.bottom-section {
-    margin-top: 30px;
-}
-
-.unlock-btn {
-    background: linear-gradient(to right, pink, purple);
-    color: white;
-    border: none;
-    padding: 15px 30px;
-    border-radius: 30px;
     font-size: 18px;
+    padding: 12px 24px;
+    border-radius: 20px;
     cursor: pointer;
 }
