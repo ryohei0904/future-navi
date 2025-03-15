@@ -30,13 +30,17 @@ body {
     gap: 20px;
 }
 
-/* サークルとテキストを横並び */
-.circle-text-container {
+.circle-container {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 20px;
-    width: 80%;
+    flex-direction: column;
+    width: 200px; /* ここを固定 */
+    text-align: center;
+}
+
+.animated-text {
+    min-height: 20px; /* 文字が変わっても高さが変わらないようにする */
 }
 
 /* AIメッセージ（アンドロイドの挨拶） */
