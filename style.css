@@ -41,10 +41,6 @@ body {
 
 .animated-text {
     min-height: 20px; /* 文字が変わっても高さが変わらないようにする */
-}
-
-/* AIメッセージ（アンドロイドの挨拶） */
-.ai-message {
     color: cyan;
     font-size: 18px;
     text-transform: uppercase;
