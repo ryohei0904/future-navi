@@ -30,22 +30,7 @@ body {
     gap: 20px;
 }
 
-.circle-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    width: 200px; /* ここを固定 */
-    text-align: center;
-}
-
-.animated-text {
-    min-height: 20px; /* 文字が変わっても高さが変わらないようにする */
-    color: cyan;
-    font-size: 18px;
-    text-transform: uppercase;
-    animation: flicker 1.5s infinite alternate;
-}
+container
 
 /* 点滅アニメーション */
 @keyframes flicker {
