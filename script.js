@@ -1,7 +1,11 @@
-const messages = ["WELCOME HUMAN.", "ANALYZING...", "READY TO BEGIN?"];
+const messages = ["READY TO BEGIN?", "ANALYZING...", "WELCOME HUMAN."];
 let index = 0;
 
-setInterval(() => {
-    document.querySelector('.ai-message').textContent = messages[index];
+function changeText() {
+    const textElement = document.querySelector(".animated-text");
+    textElement.textContent = messages[index];
     index = (index + 1) % messages.length;
-}, 2000);
+}
+
+// 2秒ごとにメッセージを変更
+setInterval(changeText, 2000);
